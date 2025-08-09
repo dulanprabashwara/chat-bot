@@ -1,0 +1,60 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase";
+import CreateBotForm from "@/components/CreateBotForm";
+import Link from "next/link";
+
+export default function CreateBotPage() {
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        router.push("/");
+      } else {
+        setUser(user);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white p-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-green-400"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-green-400">
+              Create New Bot
+            </h1>
+            <p className="text-gray-400 mt-2">
+              Design your perfect AI companion
+            </p>
+          </div>
+          <Link href="/" className="text-green-400 hover:underline">
+            ← Back to Dashboard
+          </Link>
+        </div>
+
+        {user && <CreateBotForm user={user} />}
+      </div>
+    </div>
+  );
+}
