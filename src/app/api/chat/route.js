@@ -16,6 +16,11 @@ export async function POST(request) {
     if (!process.env.OPENROUTER_API_KEY) {
       throw new Error("Missing OPENROUTER_API_KEY (set in .env.local)");
     }
+    if (/^(pk_|sk-test|YOUR_|REPLACE)/i.test(process.env.OPENROUTER_API_KEY)) {
+      throw new Error(
+        "Placeholder or test OPENROUTER_API_KEY detected; supply a real key."
+      );
+    }
 
     const {
       message,
@@ -44,6 +49,7 @@ export async function POST(request) {
       msgLen: message.length,
       promptLen: characterPrompt.length,
       history: history.length,
+      modelOverride: process.env.OPENROUTER_MODEL || null,
     });
 
     const safetySystemPrompt =
@@ -75,7 +81,8 @@ export async function POST(request) {
       { role: "user", content: sanitizeText(message) },
     ];
 
-    const modelPrimary = "mistralai/mistral-7b-instruct";
+    const configuredModel = process.env.OPENROUTER_MODEL?.trim();
+    const modelPrimary = configuredModel || "mistralai/mistral-7b-instruct";
     const modelFallback = "openrouter/auto"; // OpenRouter will choose an available model
     let modelTried = modelPrimary;
 
@@ -84,7 +91,6 @@ export async function POST(request) {
         method: "POST",
         headers: {
           Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          // Accept header can help with some proxies
           Accept: "application/json",
           "Content-Type": "application/json",
           "HTTP-Referer":
@@ -106,12 +112,25 @@ export async function POST(request) {
 
     let response = await callModel(modelPrimary);
     if (!response.ok) {
+      const primaryStatus = response.status;
       const errorText = await response.text();
-      console.warn("[CHAT] Primary model failed", response.status, errorText);
-      // Retry once with fallback on typical model errors
-      if ([401, 403, 404, 422, 500, 503].includes(response.status)) {
+      console.warn("[CHAT] Primary model failed", primaryStatus, errorText);
+      if ([401, 403, 404, 422, 500, 503].includes(primaryStatus)) {
         modelTried = modelFallback;
         response = await callModel(modelFallback);
+        if (!response.ok) {
+          const fbStatus = response.status;
+          const fbText = await response.text();
+          throw new Error(
+            `Both models failed. Primary(${primaryStatus}) '${modelPrimary}' -> '${errorText.slice(
+              0,
+              300
+            )}'; Fallback(${fbStatus}) '${modelFallback}' -> '${fbText.slice(
+              0,
+              300
+            )}'`
+          );
+        }
       }
     }
 
@@ -160,6 +179,15 @@ export async function POST(request) {
       JSON.stringify({
         error: "Failed to get AI response",
         details: isDev ? error.message : undefined,
+        code: error.message.includes("Placeholder")
+          ? "CONFIG_KEY_PLACEHOLDER"
+          : error.message.includes("Missing OPENROUTER_API_KEY")
+          ? "CONFIG_KEY_MISSING"
+          : error.message.startsWith("Both models failed")
+          ? "UPSTREAM_BOTH_FAILED"
+          : error.message.startsWith("Upstream error")
+          ? "UPSTREAM_ERROR"
+          : "UNKNOWN",
       }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );

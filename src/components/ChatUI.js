@@ -106,9 +106,10 @@ export default function ChatUI({ bot, user }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.error || data.details || "Failed to get AI response"
-        );
+        console.error("/api/chat error payload", data);
+        const detailMsg =
+          data.details || data.error || "Failed to get AI response";
+        throw new Error(detailMsg);
       }
 
       if (!data.response) {
