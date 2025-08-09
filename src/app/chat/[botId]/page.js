@@ -1,17 +1,19 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import { getBot } from "@/lib/firestore";
 import ChatUI from "@/components/ChatUI";
+import { use } from "react";
 
 export default function ChatPage({ params }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [bot, setBot] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { botId } = use(params);
+  const resolvedParams = use(params);
+  const botId = resolvedParams.botId;
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
