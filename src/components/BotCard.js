@@ -15,12 +15,14 @@ export default function BotCard({ bot }) {
             <Image
               src={bot.imageUrl}
               alt={bot.name}
-              fill
-              className="object-cover"
+              width={64}
+              height={64}
+              className="object-cover w-16 h-16"
+              priority={false}
             />
           ) : (
             <div className="w-full h-full bg-gray-700 flex items-center justify-center text-2xl">
-              {bot.name.charAt(0)}
+              {bot.name?.charAt(0) || "?"}
             </div>
           )}
         </div>
