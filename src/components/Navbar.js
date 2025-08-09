@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Navbar({ user, onLogout, onLogin }) {
+export default function Navbar({ user, onLogout, onLogin, profile }) {
   return (
     <nav className="bg-gray-900 border-b border-gray-700">
       <div className="container mx-auto px-4 py-4">
@@ -12,13 +12,23 @@ export default function Navbar({ user, onLogout, onLogin }) {
           <div className="flex items-center space-x-4">
             {user ? (
               <>
-                <span className="text-gray-300">Welcome, {user.email}</span>
-                <button
-                  onClick={onLogout}
-                  className="bg-transparent border border-green-400 text-green-400 px-4 py-2 rounded-md hover:bg-green-400 hover:text-black transition-all duration-200 text-sm"
+                <Link
+                  href="/dashboard"
+                  className="text-gray-300 hover:text-green-400 text-sm"
                 >
-                  Logout
-                </button>
+                  Dashboard
+                </Link>
+                <span className="text-gray-300 hidden sm:inline">
+                  {profile?.displayName || user.email}
+                </span>
+                {onLogout && (
+                  <button
+                    onClick={onLogout}
+                    className="bg-transparent border border-green-400 text-green-400 px-4 py-2 rounded-md hover:bg-green-400 hover:text-black transition-all duration-200 text-sm"
+                  >
+                    Logout
+                  </button>
+                )}
               </>
             ) : (
               <button

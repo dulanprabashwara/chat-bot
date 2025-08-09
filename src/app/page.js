@@ -7,8 +7,9 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateProfile,
 } from "firebase/auth";
-import { getUserBots } from "@/lib/firestore";
+import { getUserBots, setUserProfile, getUserProfile } from "@/lib/firestore";
 import BotCard from "@/components/BotCard";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
@@ -19,11 +20,12 @@ export default function Home() {
   const [showAuth, setShowAuth] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [userBots, setUserBots] = useState([]);
+  const [profile, setProfile] = useState(null);
   const [loadingBots, setLoadingBots] = useState(false);
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
-
   // Fetch user's bots
   const fetchUserBots = async (userId) => {
     try {
@@ -37,12 +39,24 @@ export default function Home() {
     }
   };
 
+  // (Removed duplicate handleAuth definition)
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       setLoading(false);
       if (user) {
+        // Load profile
+        try {
+          const profileDoc = await getUserProfile(user.uid);
+          setProfile(profileDoc);
+          if (profileDoc?.displayName) setDisplayName(profileDoc.displayName);
+        } catch (e) {
+          console.warn("Profile load failed", e);
+        }
         fetchUserBots(user.uid);
+      } else {
+        setDisplayName("");
       }
     });
 
@@ -54,16 +68,98 @@ export default function Home() {
     setAuthError("");
 
     try {
+      // Basic client-side checks to avoid unnecessary 400s
+      if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        setAuthError("Enter a valid email address.");
+        return;
+      }
+      if (!password || password.length < 6) {
+        setAuthError("Password must be at least 6 characters.");
+        return;
+      }
+      if (!isLogin) {
+        if (!displayName.trim() || displayName.trim().length < 2) {
+          setAuthError("Display Name must be at least 2 characters.");
+          return;
+        }
+      }
+
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
       } else {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const cred = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const cleanedName = displayName.trim();
+        if (cleanedName) {
+          await updateProfile(cred.user, { displayName: cleanedName });
+          await setUserProfile(cred.user.uid, { displayName: cleanedName });
+        }
       }
       setShowAuth(false);
       setEmail("");
       setPassword("");
+      if (!isLogin) setDisplayName("");
     } catch (error) {
-      setAuthError(error.message);
+      let friendly = "Authentication failed.";
+      if (error?.code) {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            // If user tried to sign up with existing email, attempt auto-login
+            if (!isLogin) {
+              try {
+                const loginCred = await signInWithEmailAndPassword(
+                  auth,
+                  email,
+                  password
+                );
+                // Success: treat as login
+                setShowAuth(false);
+                setIsLogin(true);
+                setEmail("");
+                setPassword("");
+                friendly = "Account already existed. Logged you in.";
+              } catch (loginErr) {
+                // Fallback: instruct user to switch to login
+                friendly =
+                  "Email already in use. Switch to Login and enter your password.";
+              }
+              // Show message (success or guidance) and exit catch handler
+              setAuthError(friendly.includes("Logged you in") ? "" : friendly);
+              return;
+            } else {
+              friendly = "Email already in use.";
+            }
+            break;
+          case "auth/invalid-email":
+            friendly = "Invalid email format.";
+            break;
+          case "auth/weak-password":
+            friendly = "Password too weak (min 6 characters).";
+            break;
+          case "auth/user-not-found":
+          case "auth/wrong-password":
+            friendly = "Incorrect email or password.";
+            break;
+          case "auth/too-many-requests":
+            friendly = "Too many attempts. Please wait and try again.";
+            break;
+          case "auth/operation-not-allowed":
+            friendly = "Email/password sign-in disabled in Firebase Console.";
+            break;
+          default:
+            friendly = error.code.replace("auth/", "").replace(/-/g, " ");
+        }
+      } else if (error?.message) {
+        friendly = error.message;
+      }
+      console.error("Auth error", {
+        code: error?.code,
+        message: error?.message,
+      });
+      setAuthError(friendly);
     }
   };
 
@@ -87,6 +183,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-900">
       <Navbar
         user={user}
+        profile={profile || { displayName }}
         onLogout={handleLogout}
         onLogin={() => setShowAuth(true)}
       />
@@ -113,7 +210,9 @@ export default function Home() {
             <div className="flex justify-between items-center mb-8">
               <div>
                 <h1 className="text-3xl font-bold text-green-400">
-                  Your AI Companions
+                  {displayName
+                    ? `Welcome, ${displayName}`
+                    : "Your AI Companions"}
                 </h1>
                 <p className="text-gray-400 mt-2">
                   Create and chat with your personalized AI bots
@@ -186,6 +285,18 @@ export default function Home() {
                   required
                 />
               </div>
+              {!isLogin && (
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Display Name"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    className="bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:border-green-400 focus:outline-none transition-colors w-full"
+                    required
+                  />
+                </div>
+              )}
 
               {authError && (
                 <div className="text-red-400 text-sm">{authError}</div>
