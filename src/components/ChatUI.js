@@ -29,7 +29,7 @@ export default function ChatUI({ bot, user }) {
     // Subscribe to messages for this user and bot
     const q = query(
       collection(db, `users/${user.uid}/chatbots/${bot.id}/messages`),
-      orderBy("timestamp", "asc")
+      orderBy("createdAt", "asc")
     );
 
     const unsubscribe = onSnapshot(q, {
@@ -79,9 +79,9 @@ export default function ChatUI({ bot, user }) {
       userMessageDoc = await addDoc(
         collection(db, `users/${user.uid}/chatbots/${bot.id}/messages`),
         {
-          message: userMessage,
-          sender: "user",
-          timestamp: new Date(),
+          content: userMessage,
+          role: "user",
+          createdAt: new Date(),
         }
       );
 
@@ -97,8 +97,8 @@ export default function ChatUI({ bot, user }) {
           message: userMessage,
           characterPrompt: bot.prompt,
           conversationHistory: messages.map((m) => ({
-            role: m.sender === "user" ? "user" : "assistant",
-            content: m.message,
+            role: m.role === "user" ? "user" : "assistant",
+            content: m.content,
           })),
         }),
       });
@@ -122,9 +122,9 @@ export default function ChatUI({ bot, user }) {
       await addDoc(
         collection(db, `users/${user.uid}/chatbots/${bot.id}/messages`),
         {
-          message: data.response,
-          sender: "ai",
-          timestamp: new Date(),
+          content: data.response,
+          role: "assistant",
+          createdAt: new Date(),
         }
       );
     } catch (error) {
@@ -136,9 +136,9 @@ export default function ChatUI({ bot, user }) {
       await addDoc(
         collection(db, `users/${user.uid}/chatbots/${bot.id}/messages`),
         {
-          message: "Sorry, I encountered an error. Please try again.",
-          sender: "ai",
-          timestamp: new Date(),
+          content: "Sorry, I encountered an error. Please try again.",
+          role: "assistant",
+          createdAt: new Date(),
         }
       );
     } finally {
@@ -149,10 +149,13 @@ export default function ChatUI({ bot, user }) {
   return (
     <div className="flex flex-col h-screen">
       {/* Header */}
-      <div className="bg-gray-900 border-b border-gray-700 p-4">
+      <div className="bg-gray-100 dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href="/" className="text-green-400 hover:underline">
+            <Link
+              href="/"
+              className="text-green-600 dark:text-green-400 hover:underline"
+            >
               ← Back
             </Link>
             <div className="flex items-center space-x-3">
@@ -163,13 +166,15 @@ export default function ChatUI({ bot, user }) {
                   className="w-12 h-12 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-xl">
+                <div className="w-12 h-12 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center text-xl text-gray-700 dark:text-gray-300">
                   {bot.name.charAt(0)}
                 </div>
               )}
               <div>
-                <h1 className="text-xl font-bold text-green-400">{bot.name}</h1>
-                <p className="text-sm text-gray-400">
+                <h1 className="text-xl font-bold text-green-600 dark:text-green-400">
+                  {bot.name}
+                </h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   {bot.type || "Custom Bot"}
                 </p>
               </div>
@@ -181,7 +186,7 @@ export default function ChatUI({ bot, user }) {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {isIndexBuilding ? (
-          <div className="text-center text-gray-400 mt-8">
+          <div className="text-center text-gray-600 dark:text-gray-400 mt-8">
             <p>Setting up the chat system... This may take a minute.</p>
             <div className="mt-4">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-green-400"></div>
@@ -197,24 +202,24 @@ export default function ChatUI({ bot, user }) {
           <div
             key={message.id}
             className={`flex ${
-              message.sender === "user" ? "justify-end" : "justify-start"
+              message.role === "user" ? "justify-end" : "justify-start"
             }`}
           >
             <div
               className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                message.sender === "user"
+                message.role === "user"
                   ? "bg-green-400 text-black"
-                  : "bg-gray-800 border border-gray-700"
+                  : "bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100"
               }`}
             >
-              <p className="text-sm">{message.message}</p>
+              <p className="text-sm">{message.content}</p>
             </div>
           </div>
         ))}
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-gray-800 border border-gray-700 px-4 py-2 rounded-lg">
+            <div className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 px-4 py-2 rounded-lg">
               <div className="flex space-x-1">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce"></div>
                 <div
@@ -234,7 +239,7 @@ export default function ChatUI({ bot, user }) {
       </div>
 
       {/* Input */}
-      <div className="bg-gray-900 border-t border-gray-700 p-4">
+      <div className="bg-gray-100 dark:bg-gray-900 border-t border-gray-300 dark:border-gray-700 p-4">
         <div className="max-w-4xl mx-auto">
           <form onSubmit={sendMessage} className="flex items-center space-x-2">
             <div className="relative flex-1">
@@ -247,7 +252,7 @@ export default function ChatUI({ bot, user }) {
                     ? "Setting up chat system..."
                     : `Message ${bot.name}...`
                 }
-                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-green-400 focus:outline-none transition-colors text-sm"
+                className="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:border-green-500 dark:focus:border-green-400 focus:outline-none transition-colors text-sm"
                 disabled={isLoading || isIndexBuilding}
               />
             </div>

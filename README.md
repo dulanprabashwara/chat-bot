@@ -1,4 +1,4 @@
-# AI Character Chat Platform
+# BotNexus - AI Character Chat Platform
 
 A full-stack AI character chat platform built with Next.js, Firebase, and OpenRouter. Users can chat with unique AI personalities, each with their own expertise and personality.
 
@@ -50,6 +50,7 @@ A full-stack AI character chat platform built with Next.js, Firebase, and OpenRo
 
    ```bash
    npm install
+   npm install next-themes lucide-react
    ```
 
 3. **Set up environment variables**

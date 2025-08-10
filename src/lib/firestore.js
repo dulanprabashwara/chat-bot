@@ -201,3 +201,25 @@ export async function deleteUserProfile(userId) {
     );
   }
 }
+
+// ----- Public Contact Messages -----
+// Stores contact form submissions in a top-level collection 'contactMessages'
+// Each doc: { name, email, message, createdAt }
+export async function saveContactMessage({ name, email, message }) {
+  try {
+    if (!name?.trim() || !email?.trim() || !message?.trim()) {
+      throw new Error("All fields are required");
+    }
+    const contactRef = collection(db, "contactMessages");
+    const docRef = await addDoc(contactRef, {
+      name: name.trim(),
+      email: email.trim(),
+      message: message.trim(),
+      createdAt: serverTimestamp(),
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error("Error saving contact message:", error);
+    throw new Error("Failed to send message");
+  }
+}

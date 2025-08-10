@@ -14,15 +14,8 @@ import BotCard from "@/components/BotCard";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import MagneticButton from "@/components/MagneticButton";
-import {
-  CheckCircle2,
-  Lock,
-  Globe2,
-  Save,
-  Instagram,
-  Github,
-  MessageCircle,
-} from "lucide-react";
+import { CheckCircle2, Lock, Globe2, Save } from "lucide-react";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -190,7 +183,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       <Navbar
         user={user}
         profile={profile || { displayName }}
@@ -203,10 +196,10 @@ export default function Home() {
           <div className="py-20 space-y-28">
             {/* Hero */}
             <section className="text-center max-w-5xl mx-auto">
-              <h1 className="text-5xl sm:text-6xl font-bold text-green-400 mb-6 leading-tight">
+              <h1 className="text-5xl sm:text-6xl font-bold text-green-600 dark:text-green-400 mb-6 leading-tight">
                 Your Personal AI Assistant, Anytime.
               </h1>
-              <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl text-gray-700 dark:text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
                 Chat with our AI for instant answers, ideas, and conversation.
               </p>
               <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
@@ -221,7 +214,7 @@ export default function Home() {
                     const el = document.getElementById("bot-types");
                     if (el) el.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="group inline-flex items-center gap-3 text-lg font-semibold px-10 py-4 rounded-xl border border-green-400 text-green-400 bg-gray-900 hover:border-green-300 hover:text-green-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400/60 transition-colors"
+                  className="group inline-flex items-center gap-3 text-lg font-semibold px-10 py-4 rounded-xl border border-green-600 dark:border-green-400 text-green-600 dark:text-green-400 bg-white dark:bg-gray-900 hover:border-green-500 dark:hover:border-green-300 hover:text-green-500 dark:hover:text-green-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500/60 dark:focus-visible:ring-green-400/60 transition-colors"
                   aria-label="Explore available bot characters"
                 >
                   <span>Explore Bots</span>
@@ -244,7 +237,7 @@ export default function Home() {
 
             {/* Bot Types Preview */}
             <section id="bot-types" className="space-y-8">
-              <h2 className="text-3xl font-bold text-green-400">
+              <h2 className="text-3xl font-bold text-green-600 dark:text-green-400">
                 Bot Personalities
               </h2>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
@@ -277,15 +270,17 @@ export default function Home() {
                 ].map((b) => (
                   <div
                     key={b.name}
-                    className="bg-gray-800 border border-gray-700 rounded-lg p-4 flex flex-col items-center text-center hover:border-green-400 transition-colors"
+                    className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex flex-col items-center text-center hover:border-green-500 dark:hover:border-green-400 transition-colors"
                   >
                     <img
                       src={b.img}
                       alt={b.name}
                       className="w-16 h-16 mb-3 rounded-full object-cover"
                     />
-                    <h3 className="text-green-300 font-semibold">{b.name}</h3>
-                    <p className="text-gray-400 text-sm mt-1 leading-snug">
+                    <h3 className="text-green-600 dark:text-green-300 font-semibold">
+                      {b.name}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 leading-snug">
                       {b.blurb}
                     </p>
                   </div>
@@ -295,7 +290,9 @@ export default function Home() {
 
             {/* Features */}
             <section id="features" className="space-y-8">
-              <h2 className="text-3xl font-bold text-green-400">Features</h2>
+              <h2 className="text-3xl font-bold text-green-600 dark:text-green-400">
+                Features
+              </h2>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {[
                   {
@@ -321,15 +318,15 @@ export default function Home() {
                 ].map((f) => (
                   <div
                     key={f.title}
-                    className="bg-gray-800 border border-gray-700 rounded-lg p-6 flex flex-col gap-4 hover:border-green-400 transition-colors"
+                    className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col gap-4 hover:border-green-500 dark:hover:border-green-400 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <f.icon className="h-6 w-6 text-green-400" />
-                      <h3 className="text-green-300 font-semibold text-base leading-tight">
+                      <f.icon className="h-6 w-6 text-green-600 dark:text-green-400" />
+                      <h3 className="text-green-600 dark:text-green-300 font-semibold text-base leading-tight">
                         {f.title}
                       </h3>
                     </div>
-                    <p className="text-gray-400 text-sm leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                       {f.desc}
                     </p>
                   </div>
@@ -339,7 +336,7 @@ export default function Home() {
 
             {/* How It Works */}
             <section id="how-it-works" className="space-y-8">
-              <h2 className="text-3xl font-bold text-green-400">
+              <h2 className="text-3xl font-bold text-green-600 dark:text-green-400">
                 How It Works
               </h2>
               <ol className="grid gap-6 md:grid-cols-3 list-none">
@@ -362,17 +359,17 @@ export default function Home() {
                 ].map((s) => (
                   <li
                     key={s.step}
-                    className="relative bg-gray-800 border border-gray-700 rounded-lg p-6 flex flex-col gap-3 hover:border-green-400 transition-colors"
+                    className="relative bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col gap-3 hover:border-green-500 dark:hover:border-green-400 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 flex items-center justify-center rounded-full bg-green-400 text-black font-semibold text-lg">
+                      <div className="h-10 w-10 flex items-center justify-center rounded-full bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold text-lg">
                         {s.step}
                       </div>
-                      <h3 className="text-green-300 font-semibold text-lg">
+                      <h3 className="text-green-600 dark:text-green-300 font-semibold text-lg">
                         {s.title}
                       </h3>
                     </div>
-                    <p className="text-gray-400 text-sm leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                       {s.text}
                     </p>
                   </li>
@@ -382,7 +379,7 @@ export default function Home() {
 
             {/* Testimonials (optional) */}
             <section id="testimonials" className="space-y-8">
-              <h2 className="text-3xl font-bold text-green-400">
+              <h2 className="text-3xl font-bold text-green-600 dark:text-green-400">
                 What Early Users Say
               </h2>
               <div className="grid gap-6 md:grid-cols-3">
@@ -402,12 +399,12 @@ export default function Home() {
                 ].map((t) => (
                   <div
                     key={t.name}
-                    className="bg-gray-800 border border-gray-700 rounded-lg p-6 flex flex-col gap-4 hover:border-green-400 transition-colors"
+                    className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col gap-4 hover:border-green-500 dark:hover:border-green-400 transition-colors"
                   >
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                       “{t.text}”
                     </p>
-                    <div className="text-green-300 text-sm font-medium">
+                    <div className="text-green-600 dark:text-green-300 text-sm font-medium">
                       — {t.name}
                     </div>
                   </div>
@@ -415,42 +412,7 @@ export default function Home() {
               </div>
             </section>
 
-            {/* Footer */}
-            <footer className="pt-12 border-t border-gray-800 text-sm text-gray-400 flex flex-col items-center gap-6">
-              <div className="flex gap-6">
-                <a
-                  href="https://instagram.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="hover:text-green-400 transition-colors"
-                >
-                  <Instagram className="h-6 w-6" />
-                </a>
-                <a
-                  href="https://wa.me/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="WhatsApp"
-                  className="hover:text-green-400 transition-colors"
-                >
-                  <MessageCircle className="h-6 w-6" />
-                </a>
-                <a
-                  href="https://github.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="hover:text-green-400 transition-colors"
-                >
-                  <Github className="h-6 w-6" />
-                </a>
-              </div>
-              <div className="text-center text-gray-500">
-                © {new Date().getFullYear()} AI Character Chat. All rights
-                reserved.
-              </div>
-            </footer>
+            <Footer />
           </div>
         ) : (
           <div>

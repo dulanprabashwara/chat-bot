@@ -11,37 +11,35 @@ service cloud.firestore {
       allow create: if isOwner(userId) && request.resource.data.keys().hasAll(['email'])
         && request.resource.data.email == request.auth.token.email;
       allow read, update, delete: if isOwner(userId);
+    }
 
-      // Chatbots collection
-      match /users/{userId}/chatbots/{botId} {
-        allow create: if isOwner(userId)
-          && request.resource.data.keys().hasAll(['name','characterPrompt','createdAt'])
-          && request.resource.data.name is string
-          && request.resource.data.name.size() > 0
-          && request.resource.data.name.size() <= 60
-          && request.resource.data.characterPrompt is string
-          && request.resource.data.characterPrompt.size() <= 5000;
-        allow read: if isOwner(userId);
-        allow update: if isOwner(userId)
-          && (request.resource.data.name == resource.data.name
-              || (request.resource.data.name is string
-                  && request.resource.data.name.size() > 0
-                  && request.resource.data.name.size() <= 60));
-        allow delete: if isOwner(userId);
+    // Chatbots collection
+    match /users/{userId}/chatbots/{botId} {
+      allow create: if isOwner(userId)
+        && request.resource.data.keys().hasAll(['name','characterPrompt','createdAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 60
+        && request.resource.data.characterPrompt is string
+        && request.resource.data.characterPrompt.size() <= 5000;
+      allow read: if isOwner(userId);
+      allow update: if isOwner(userId)
+        && (request.resource.data.name == resource.data.name
+            || (request.resource.data.name is string
+                && request.resource.data.name.size() > 0
+                && request.resource.data.name.size() <= 60));
+      allow delete: if isOwner(userId);
+    }
 
-        // Messages subcollection
-        match /users/{userId}/chatbots/{botId}/messages/{msgId} {
-          allow create: if isOwner(userId)
-            && request.resource.data.keys().hasAll(['role','content','createdAt'])
-            && request.resource.data.role in ['user','assistant']
-            && request.resource.data.content is string
-            && request.resource.data.content.size() > 0
-            && request.resource.data.content.size() <= 8000;
-          allow read, update, delete: if isOwner(userId);
-        }
-      }
+    // Messages subcollection (fixed path)
+    match /users/{userId}/chatbots/{botId}/messages/{msgId} {
+      allow create: if isOwner(userId)
+        && request.resource.data.keys().hasAll(['role','content','createdAt'])
+        && request.resource.data.role in ['user','assistant']
+        && request.resource.data.content is string
+        && request.resource.data.content.size() > 0
+        && request.resource.data.content.size() <= 8000;
+      allow read, update, delete: if isOwner(userId);
     }
   }
 }
-
-firebase deploy --only firestore:rules
