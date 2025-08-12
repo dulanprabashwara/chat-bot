@@ -127,15 +127,17 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-green-400 text-2xl animate-pulse">Loading...</div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-green-600 dark:text-green-400 text-2xl animate-pulse">
+          Loading...
+        </div>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-900 text-gray-200 flex flex-col items-center justify-center space-y-4">
+      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center space-y-4">
         <Navbar />
         <p>You need to login to view your dashboard.</p>
         <Link

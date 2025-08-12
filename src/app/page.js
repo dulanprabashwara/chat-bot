@@ -176,8 +176,10 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-green-400 text-2xl animate-pulse">Loading...</div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-green-600 dark:text-green-400 text-2xl animate-pulse">
+          Loading...
+        </div>
       </div>
     );
   }

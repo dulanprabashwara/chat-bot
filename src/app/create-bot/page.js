@@ -26,10 +26,10 @@ export default function CreateBotPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white p-8">
+      <div className="min-h-screen bg-background text-foreground p-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-green-400"></div>
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-green-600 dark:border-t-green-400"></div>
           </div>
         </div>
       </div>
@@ -37,11 +37,11 @@ export default function CreateBotPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-background text-foreground p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-green-400">
+            <h1 className="text-3xl font-bold text-green-600 dark:text-green-400">
               Create New Bot
             </h1>
             <p className="text-gray-400 mt-2">

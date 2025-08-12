@@ -33,8 +33,8 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-gray-900/80 bg-white/95 dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 transition-colors">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Left: Logo */}
+      <div className="container mx-auto px-4 h-16 flex items-center">
+        {/* Left: Logo + Navigation */}
         <div className="flex items-center gap-8">
           <Link
             href="/"
@@ -54,18 +54,19 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
               BotNexus
             </span>
           </Link>
-          {/* Desktop Nav */}
-          <ul className="hidden md:flex items-center gap-6 text-base lg:text-lg font-medium">
+
+          {/* Desktop Navigation */}
+          <ul className="hidden md:flex items-center gap-8 text-lg lg:text-xl font-medium">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className={`transition-colors ${
+                    className={`transition-colors px-4 py-2 ${
                       active
                         ? "text-green-600 dark:text-green-400 font-semibold"
-                        : "text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400"
+                        : "text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300"
                     }`}
                   >
                     {link.label}
@@ -77,7 +78,7 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
         </div>
 
         {/* Right: Theme Toggle (only on homepage) + Auth / User */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ml-auto flex-shrink-0">
           {isHomepage && (
             <div className="hidden md:block">
               <ThemeToggle />
@@ -152,7 +153,7 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
                     className={`block px-2 py-2 rounded-md transition-colors ${
                       active
                         ? "text-green-600 dark:text-green-400 bg-gray-100 dark:bg-gray-800/80 font-semibold"
-                        : "text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-800/80"
+                        : "text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300 hover:bg-gray-100 dark:hover:bg-gray-800/80"
                     }`}
                     onClick={closeMenu}
                   >
