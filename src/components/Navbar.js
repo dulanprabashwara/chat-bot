@@ -33,20 +33,20 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-gray-900/80 bg-white/95 dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 transition-colors">
-      <div className="container mx-auto px-4 h-16 flex items-center">
+      <div className="container mx-auto px-6 h-20 flex items-center">
         {/* Left: Logo + Navigation */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-12">
           <Link
             href="/"
-            className="flex items-center gap-3 text-3xl lg:text-4xl font-bold tracking-tight text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300 transition-all duration-300 ease-in-out hover:scale-105"
+            className="flex items-center gap-4 text-4xl lg:text-5xl font-bold tracking-tight text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300 transition-all duration-300 ease-in-out hover:scale-105"
             onClick={closeMenu}
           >
             <div className="relative overflow-hidden rounded-full ring-2 ring-green-500/20 hover:ring-green-500/40 transition-all duration-300">
               <Image
                 src="/BotNexus.png"
                 alt="BotNexus"
-                width={48}
-                height={48}
+                width={60}
+                height={60}
                 className="object-cover rounded-full animate-rotate-continuous hover:animate-spin-slow transition-all duration-300"
               />
             </div>
@@ -56,14 +56,14 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
           </Link>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-8 text-lg lg:text-xl font-medium">
+          <ul className="hidden md:flex items-center gap-10 text-xl lg:text-2xl font-medium">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className={`transition-colors px-4 py-2 ${
+                    className={`transition-colors px-6 py-3 ${
                       active
                         ? "text-green-600 dark:text-green-400 font-semibold"
                         : "text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300"
@@ -78,66 +78,66 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
         </div>
 
         {/* Right: Theme Toggle (only on homepage) + Auth / User */}
-        <div className="flex items-center gap-4 ml-auto flex-shrink-0">
-          {isHomepage && (
-            <div className="hidden md:block">
-              <ThemeToggle />
-            </div>
-          )}
-          {user ? (
-            <>
-              <Link
-                href="/dashboard"
-                className="text-base lg:text-lg bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold px-5 py-2.5 rounded-md hover:bg-green-500 dark:hover:bg-green-300 transition-colors font-poppins"
-              >
-                My Account
-              </Link>
-              {onLogout && (
-                <button
-                  onClick={() => {
-                    onLogout();
-                    closeMenu();
-                  }}
-                  className="text-base lg:text-lg bg-transparent border border-green-600 dark:border-green-400 text-green-600 dark:text-green-400 px-5 py-2.5 rounded-md hover:bg-green-600 hover:text-white dark:hover:bg-green-400 dark:hover:text-black transition-colors font-poppins font-medium"
-                >
-                  Logout
-                </button>
-              )}
-            </>
-          ) : (
-            <button
-              onClick={() => {
-                onLogin();
-                closeMenu();
-              }}
-              className="text-base lg:text-lg bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold px-6 py-2.5 rounded-md hover:bg-green-500 dark:hover:bg-green-300 transition-colors font-poppins"
-            >
-              Sign In
-            </button>
-          )}
-          {/* Mobile Hamburger */}
+        <div className="flex items-center gap-6 ml-auto flex-shrink-0">
+          {/* Mobile Hamburger - Show first on mobile */}
           <button
             onClick={() => setMenuOpen((o) => !o)}
-            className="md:hidden inline-flex flex-col justify-center items-center w-10 h-10 rounded-md border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:border-green-600 dark:hover:border-green-400 transition-colors"
+            className="md:hidden inline-flex flex-col justify-center items-center w-12 h-12 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:border-green-600 dark:hover:border-green-400 transition-colors order-first"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
           >
             <span
-              className={`h-0.5 w-5 bg-current transition-transform duration-300 ${
+              className={`h-0.5 w-6 bg-current transition-transform duration-300 ${
                 menuOpen ? "translate-y-1.5 rotate-45" : ""
               }`}
             />
             <span
-              className={`h-0.5 w-5 bg-current my-1 transition-opacity duration-300 ${
+              className={`h-0.5 w-6 bg-current my-1 transition-opacity duration-300 ${
                 menuOpen ? "opacity-0" : "opacity-100"
               }`}
             />
             <span
-              className={`h-0.5 w-5 bg-current transition-transform duration-300 ${
+              className={`h-0.5 w-6 bg-current transition-transform duration-300 ${
                 menuOpen ? "-translate-y-1.5 -rotate-45" : ""
               }`}
             />
           </button>
+
+          {/* Theme toggle and user buttons */}
+          <div className="hidden md:flex items-center gap-6">
+            {isHomepage && <ThemeToggle />}
+            {user ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-lg lg:text-xl bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold px-7 py-3.5 rounded-lg hover:bg-green-500 dark:hover:bg-green-300 transition-colors font-poppins"
+                >
+                  My Account
+                </Link>
+                {onLogout && (
+                  <button
+                    onClick={() => {
+                      onLogout();
+                      closeMenu();
+                    }}
+                    className="text-lg lg:text-xl bg-transparent border-2 border-green-600 dark:border-green-400 text-green-600 dark:text-green-400 px-7 py-3.5 rounded-lg hover:bg-green-600 hover:text-white dark:hover:bg-green-400 dark:hover:text-black transition-colors font-poppins font-medium"
+                  >
+                    Logout
+                  </button>
+                )}
+              </>
+            ) : (
+              <button
+                onClick={() => {
+                  onLogin();
+                  closeMenu();
+                }}
+                className="text-lg lg:text-xl bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold px-8 py-3.5 rounded-lg hover:bg-green-500 dark:hover:bg-green-300 transition-colors font-poppins"
+              >
+                Sign In
+              </button>
+            )}
+          </div>
         </div>
       </div>
       {/* Mobile Menu Panel */}

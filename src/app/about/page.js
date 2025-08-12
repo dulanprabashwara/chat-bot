@@ -58,22 +58,28 @@ export default function AboutPage() {
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold text-green-300">Tech Stack</h2>
           <ul className="grid sm:grid-cols-2 gap-3 text-sm text-gray-700 dark:text-gray-300">
-            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3">
+            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3 flex items-center gap-3">
+              <span className="text-lg">⚛️</span>
               Next.js (App Router)
             </li>
-            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3">
+            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3 flex items-center gap-3">
+              <span className="text-lg">🔥</span>
               Firebase Auth & Firestore
             </li>
-            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3">
+            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3 flex items-center gap-3">
+              <span className="text-lg">🚀</span>
               Serverless API Routes
             </li>
-            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3">
+            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3 flex items-center gap-3">
+              <span className="text-lg">🎨</span>
               Tailwind CSS UI
             </li>
-            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3">
+            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3 flex items-center gap-3">
+              <span className="text-lg">🤖</span>
               OpenRouter AI Models
             </li>
-            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3">
+            <li className="bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3 flex items-center gap-3">
+              <span className="text-lg">⚡</span>
               Edge-friendly Design
             </li>
           </ul>
