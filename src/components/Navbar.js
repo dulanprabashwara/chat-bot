@@ -14,14 +14,16 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "About", href: "/#features" },
+    { label: "About", href: "/about" },
     { label: "Chat", href: user ? "/dashboard" : "/#bot-types" },
-    { label: "Contact", href: "/#contact" },
+    { label: "Contact", href: "/contact" },
   ];
 
   const isActive = (href) => {
     if (href === "/") return pathname === "/";
     if (href === "/dashboard") return pathname.startsWith("/dashboard");
+    if (href === "/contact") return pathname === "/contact";
+    if (href === "/about") return pathname === "/about";
     if (href.startsWith("/#")) return pathname === "/"; // section anchors
     return pathname === href;
   };
@@ -60,16 +62,13 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className={`relative transition-colors ${
+                    className={`transition-colors ${
                       active
                         ? "text-green-600 dark:text-green-400 font-semibold"
                         : "text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400"
                     }`}
                   >
                     {link.label}
-                    {active && (
-                      <span className="absolute -bottom-2 left-0 h-0.5 w-full bg-green-600 dark:bg-green-400 rounded" />
-                    )}
                   </Link>
                 </li>
               );
