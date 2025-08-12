@@ -1,8 +1,32 @@
 "use client";
 
+import Link from "next/link";
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors">
+      {/* Back to Homepage Button */}
+      <div className="container mx-auto px-4 pt-8">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300 transition-colors group"
+        >
+          <svg
+            className="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5" />
+            <path d="M12 19l-7-7 7-7" />
+          </svg>
+          <span className="font-medium">Back to Homepage</span>
+        </Link>
+      </div>
+
       <div className="container mx-auto px-4 py-16 max-w-4xl space-y-12">
         <header className="space-y-4">
           <h1 className="text-5xl font-bold text-green-400">About</h1>

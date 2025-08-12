@@ -15,7 +15,7 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Chat", href: user ? "/dashboard" : "/#bot-types" },
+    ...(user ? [] : [{ label: "Explore", href: "/#bot-types" }]),
     { label: "Contact", href: "/contact" },
   ];
 
@@ -85,9 +85,12 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
           )}
           {user ? (
             <>
-              <span className="hidden sm:inline text-gray-600 dark:text-gray-300 text-base lg:text-lg font-poppins">
-                {profile?.displayName || user.email}
-              </span>
+              <Link
+                href="/dashboard"
+                className="text-base lg:text-lg bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold px-5 py-2.5 rounded-md hover:bg-green-500 dark:hover:bg-green-300 transition-colors font-poppins"
+              >
+                My Account
+              </Link>
               {onLogout && (
                 <button
                   onClick={() => {
@@ -182,17 +185,28 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
               </li>
             )}
             {user && (
-              <li>
-                <button
-                  onClick={() => {
-                    onLogout();
-                    closeMenu();
-                  }}
-                  className="w-full text-left px-3 py-3 rounded-md border border-green-600 dark:border-green-400 text-green-600 dark:text-green-400 hover:bg-green-600 hover:text-white dark:hover:bg-green-400 dark:hover:text-black transition-colors text-base font-poppins font-medium"
-                >
-                  Logout
-                </button>
-              </li>
+              <>
+                <li>
+                  <Link
+                    href="/dashboard"
+                    className="w-full text-left block px-3 py-3 rounded-md bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold hover:bg-green-500 dark:hover:bg-green-300 transition-colors text-base font-poppins"
+                    onClick={closeMenu}
+                  >
+                    My Account
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      onLogout();
+                      closeMenu();
+                    }}
+                    className="w-full text-left px-3 py-3 rounded-md border border-green-600 dark:border-green-400 text-green-600 dark:text-green-400 hover:bg-green-600 hover:text-white dark:hover:bg-green-400 dark:hover:text-black transition-colors text-base font-poppins font-medium"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
             )}
           </ul>
         </div>

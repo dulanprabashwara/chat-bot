@@ -5,7 +5,7 @@ import { Github, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="pt-16 border-t border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 transition-colors">
+    <footer className="pt-16 pb-0 mb-0 border-t border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 transition-colors">
       <div className="grid gap-10 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         <div className="space-y-4">
           <h3 className="text-green-600 dark:text-green-400 text-xl font-semibold">
@@ -96,7 +96,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="mt-12 text-xs text-center text-gray-500 dark:text-gray-600">
+      <div className="mt-12 pb-0 text-xs text-center text-gray-500 dark:text-gray-600">
         © {new Date().getFullYear()} BotNexus. All rights reserved.
       </div>
     </footer>
