@@ -32,7 +32,7 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
   const isHomepage = pathname === "/";
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-gray-900/80 bg-white/95 dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 transition-colors">
+    <nav className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/80 bg-background/95 border-b border-border transition-colors">
       <div className="container mx-auto px-6 h-20 flex items-center">
         {/* Left: Logo + Navigation */}
         <div className="flex items-center gap-12">
@@ -142,7 +142,7 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
       </div>
       {/* Mobile Menu Panel */}
       {menuOpen && (
-        <div className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur transition-colors">
+        <div className="md:hidden border-t border-border bg-background/95 backdrop-blur transition-colors">
           <ul className="flex flex-col px-4 py-4 space-y-2 text-base font-poppins">
             {navLinks.map((link) => {
               const active = isActive(link.href);

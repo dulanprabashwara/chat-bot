@@ -1,18 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createBot } from "@/lib/firestore";
 import { botTypes } from "@/lib/botTypes";
 
-export default function CreateBotForm({ user }) {
+export default function CreateBotForm({ user, preSelectedBotType }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    type: "assistant",
-    prompt: botTypes.assistant.description,
-  });
+
+  // Initialize form data with pre-selected bot type if provided
+  const getInitialFormData = () => {
+    const defaultType =
+      preSelectedBotType && botTypes[preSelectedBotType]
+        ? preSelectedBotType
+        : "assistant";
+    return {
+      name: "",
+      type: defaultType,
+      prompt: botTypes[defaultType].description,
+    };
+  };
+
+  const [formData, setFormData] = useState(getInitialFormData);
+
+  // Update form data when preSelectedBotType changes
+  useEffect(() => {
+    if (preSelectedBotType && botTypes[preSelectedBotType]) {
+      setFormData((prev) => ({
+        ...prev,
+        type: preSelectedBotType,
+        prompt: botTypes[preSelectedBotType].description,
+      }));
+    }
+  }, [preSelectedBotType]);
 
   const handleTypeChange = (e) => {
     const newType = e.target.value;
@@ -69,6 +90,11 @@ export default function CreateBotForm({ user }) {
       <div>
         <label className="block text-sm font-medium text-gray-300 mb-2">
           Bot Type
+          {preSelectedBotType && (
+            <span className="ml-2 text-xs bg-green-500 text-white px-2 py-1 rounded-full">
+              Pre-selected
+            </span>
+          )}
         </label>
         <select
           value={formData.type}

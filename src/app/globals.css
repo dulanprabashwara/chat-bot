@@ -6,17 +6,17 @@
 
 @layer base {
   :root {
-    /* Aceternity UI Light Mode - Pure White Background, Black Text */
-    --background: 0 0% 100%; /* #ffffff */
-    --foreground: 0 0% 0%; /* #000000 */
+    /* Aceternity UI Light Mode - White Background, Dark Text */
+    --background: 0 0% 100%; /* #ffffff - White background for light mode */
+    --foreground: 0 0% 0%; /* #000000 - Black text for light mode */
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 15%; /* Darker gray for better visibility in light mode */
     --border: 0 0% 90%;
     --input: 0 0% 96%;
     --primary: 142.1 76.2% 36.3%; /* Keep your green theme */
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 0%;
+    --secondary-foreground: 0 0% 0%; /* Black text on light cards */
     --ring: 142.1 76.2% 36.3%;
   }
 
@@ -91,5 +91,14 @@
     transition-property: background-color, border-color, color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+  }
+}
+
+@layer components {
+  /* Common page container that respects theme */
+  .page-container {
+    min-height: 100vh;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 }

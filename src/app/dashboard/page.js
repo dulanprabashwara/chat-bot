@@ -127,7 +127,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="flex items-center justify-center">
         <div className="text-green-600 dark:text-green-400 text-2xl animate-pulse">
           Loading...
         </div>
@@ -137,7 +137,7 @@ export default function DashboardPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center space-y-4">
+      <div className="flex flex-col items-center justify-center space-y-4">
         <Navbar />
         <p>You need to login to view your dashboard.</p>
         <Link
@@ -151,7 +151,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors">
+    <div className="transition-colors">
       <Navbar user={user} />
       <main className="container mx-auto px-4 py-8 space-y-10">
         <section className="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl p-8 shadow-2xl transition-colors">
@@ -196,14 +196,14 @@ export default function DashboardPage() {
               <div className="grid gap-6">
                 {/* Display Name */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className="text-sm font-medium text-foreground">
                     Display Name
                   </label>
                   <div className="relative">
                     {editingName ? (
                       <div className="flex gap-2">
                         <input
-                          className="flex-1 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:border-green-600 dark:focus:border-green-400 focus:ring-2 focus:ring-green-600/20 dark:focus:ring-green-400/20 focus:outline-none transition-all duration-200"
+                          className="flex-1 bg-input border border-border rounded-lg px-4 py-3 text-foreground focus:border-green-400 focus:ring-2 focus:ring-green-400/20 focus:outline-none transition-all duration-200"
                           value={newDisplayName}
                           onChange={(e) => setNewDisplayName(e.target.value)}
                           maxLength={40}
@@ -230,14 +230,14 @@ export default function DashboardPage() {
                             setNewDisplayName(profile?.displayName || "");
                           }}
                           disabled={savingName}
-                          className="px-4 py-3 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-500 disabled:opacity-50 transition-colors"
+                          className="px-4 py-3 bg-muted text-muted-foreground rounded-lg font-medium hover:bg-muted/80 disabled:opacity-50 transition-colors"
                         >
                           Cancel
                         </button>
                       </div>
                     ) : (
-                      <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3">
-                        <span className="text-gray-900 dark:text-white">
+                      <div className="flex items-center justify-between bg-input border border-border rounded-lg px-4 py-3">
+                        <span className="text-foreground">
                           {profile?.displayName || "Not set"}
                         </span>
                         <button
@@ -265,20 +265,20 @@ export default function DashboardPage() {
 
                 {/* Email */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className="text-sm font-medium text-muted-foreground">
                     Email Address
                   </label>
-                  <div className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-gray-700 dark:text-gray-300">
+                  <div className="bg-input border border-border rounded-lg px-4 py-3 text-muted-foreground">
                     {user.email}
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     Email cannot be changed from here
                   </p>
                 </div>
 
                 {/* Bot Count */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className="text-sm font-medium text-foreground">
                     Total Bots Created
                   </label>
                   <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/30 rounded-lg px-4 py-3 flex items-center justify-between">
@@ -302,7 +302,7 @@ export default function DashboardPage() {
                         <span className="text-2xl font-bold text-green-600 dark:text-green-400">
                           {bots.length}
                         </span>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-sm text-muted-foreground">
                           Active Bots
                         </p>
                       </div>
@@ -351,7 +351,7 @@ export default function DashboardPage() {
                     </>
                   )}
                 </button>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-muted-foreground mt-2">
                   This action cannot be undone. All your bots and data will be
                   permanently deleted.
                 </p>
@@ -360,12 +360,12 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-6 transition-colors">
-          <h2 className="text-xl font-semibold text-green-600 dark:text-green-400 mb-6">
+        <section className="bg-secondary border border-border rounded-lg p-6 transition-colors">
+          <h2 className="text-xl font-semibold text-green-400 mb-6">
             Your Bots
           </h2>
           {bots.length === 0 ? (
-            <p className="text-gray-600 dark:text-gray-400 text-center py-8">
+            <p className="text-muted-foreground text-center py-8">
               No bots yet.
             </p>
           ) : (
@@ -386,10 +386,10 @@ export default function DashboardPage() {
                 return (
                   <div
                     key={b.id}
-                    className="bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-green-600 dark:hover:border-green-400 transition-colors"
+                    className="bg-muted border border-border rounded-lg p-4 hover:border-green-400 transition-colors"
                   >
                     <div className="flex items-center space-x-4 mb-4">
-                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-400 dark:border-gray-600">
+                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-border">
                         <Image
                           src={getBotImage(b.type)}
                           alt={`${b.name} bot`}
@@ -402,7 +402,7 @@ export default function DashboardPage() {
                         <h3 className="font-semibold text-green-700 dark:text-green-300 text-lg">
                           {b.name}
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm">
+                        <p className="text-muted-foreground text-sm">
                           {b.type || "Custom"}
                         </p>
                       </div>

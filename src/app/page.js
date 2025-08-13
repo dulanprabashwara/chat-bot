@@ -15,10 +15,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import MagneticButton from "@/components/MagneticButton";
 import { CheckCircle2, Lock, Globe2, Save } from "lucide-react";
 
 export default function Home() {
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [showAuth, setShowAuth] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
@@ -47,6 +49,17 @@ export default function Home() {
 
     return () => unsubscribe();
   }, []);
+
+  const handleChatNowClick = (botType) => {
+    if (user) {
+      // User is authenticated, redirect to create-bot page with bot type
+      router.push(`/create-bot?type=${botType}`);
+    } else {
+      // User is not authenticated, show sign-in form
+      setShowAuth(true);
+      setIsLogin(true);
+    }
+  };
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -83,7 +96,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center transition-colors">
+      <div className="flex items-center justify-center transition-colors">
         <div className="text-center space-y-6">
           {/* Enhanced loading spinner */}
           <div className="relative">
@@ -124,7 +137,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors">
+    <div className="transition-colors">
       <Navbar
         user={user}
         onLogin={() => setShowAuth(true)}
@@ -139,7 +152,7 @@ export default function Home() {
               <h1 className="text-4xl sm:text-6xl font-bold text-green-600 dark:text-green-400 leading-tight">
                 Chat with Personality
               </h1>
-              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+              <p className="text-xl text-foreground max-w-3xl mx-auto">
                 Experience conversations that adapt to your needs with AI
                 personalities that understand context and remember what matters.
               </p>
@@ -182,6 +195,31 @@ export default function Home() {
             )}
           </section>
 
+          {/* About Site Description */}
+          <section className="text-center space-y-6 max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-2xl p-8 backdrop-blur-sm">
+              <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-4">
+                Your Digital Companion Awaits
+              </h2>
+              <p className="text-lg text-foreground leading-relaxed">
+                Our AI Chatbot is designed to make every conversation smart,
+                simple, and meaningful. Whether you need quick answers, creative
+                ideas, or just someone to talk to, our assistant is always ready
+                — 24/7. With secure authentication, saved chat history, and
+                image sharing, you can enjoy a personalized and seamless
+                experience every time you log in. It's more than just a chatbot
+                — it's your digital companion.
+              </p>
+
+              {/* Decorative elements */}
+              <div className="flex justify-center items-center gap-4 mt-6">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse delay-150"></div>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-300"></div>
+              </div>
+            </div>
+          </section>
+
           {/* Features Grid */}
           <section className="space-y-12">
             <h2 className="text-3xl font-bold text-green-600 dark:text-green-400 text-center">
@@ -220,7 +258,7 @@ export default function Home() {
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 text-center space-y-4 hover:shadow-2xl hover:shadow-green-500/10 dark:hover:shadow-green-400/10 hover:border-green-500 dark:hover:border-green-400 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer transform"
+                  className="group relative bg-secondary border border-border rounded-xl p-6 text-center space-y-4 hover:shadow-2xl hover:shadow-green-500/10 hover:border-green-500 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer transform"
                   style={{
                     animationDelay: `${index * 150}ms`,
                   }}
@@ -234,7 +272,7 @@ export default function Home() {
                   <h3 className="text-green-600 dark:text-green-300 font-bold text-xl group-hover:text-green-500 dark:group-hover:text-green-400 transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-700 dark:text-gray-400 text-base leading-relaxed group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
+                  <p className="text-muted-foreground text-base leading-relaxed group-hover:text-foreground transition-colors">
                     {feature.desc}
                   </p>
 
@@ -273,7 +311,7 @@ export default function Home() {
               ].map((s, index) => (
                 <li
                   key={s.step}
-                  className="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 flex flex-col gap-4 hover:shadow-2xl hover:shadow-green-500/10 dark:hover:shadow-green-400/10 hover:border-green-500 dark:hover:border-green-400 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer transform"
+                  className="group relative bg-secondary border border-border rounded-xl p-6 flex flex-col gap-4 hover:shadow-2xl hover:shadow-green-500/10 hover:border-green-500 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer transform"
                   style={{
                     animationDelay: `${index * 150}ms`,
                   }}
@@ -290,7 +328,7 @@ export default function Home() {
                     </h3>
                   </div>
 
-                  <p className="text-gray-700 dark:text-gray-400 text-base leading-relaxed group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors pl-16">
+                  <p className="text-muted-foreground text-base leading-relaxed group-hover:text-foreground transition-colors pl-16">
                     {s.text}
                   </p>
 
@@ -349,7 +387,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-green-600 dark:text-green-400 text-center">
               Explore Different Bot Personalities
             </h2>
-            <p className="text-xl text-gray-700 dark:text-gray-300 text-center max-w-3xl mx-auto">
+            <p className="text-xl text-foreground text-center max-w-3xl mx-auto">
               Choose from our collection of specialized AI personalities, each
               designed for different types of conversations and tasks.
             </p>
@@ -402,14 +440,14 @@ export default function Home() {
               ].map((bot, index) => (
                 <div
                   key={bot.type}
-                  className="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:shadow-2xl hover:shadow-green-500/10 dark:hover:shadow-green-400/10 hover:border-green-500 dark:hover:border-green-400 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer transform"
+                  className="group relative bg-secondary border border-border rounded-xl p-6 hover:shadow-2xl hover:shadow-green-500/10 hover:border-green-500 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer transform"
                   style={{
                     animationDelay: `${index * 150}ms`,
                   }}
                 >
                   {/* Bot avatar with glow effect */}
                   <div className="relative mb-4">
-                    <div className="w-20 h-20 mx-auto bg-white dark:bg-gray-700 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-green-400/30 transition-all duration-300 overflow-hidden border-2 border-gray-200 dark:border-gray-600 group-hover:border-green-400">
+                    <div className="w-20 h-20 mx-auto bg-muted rounded-full flex items-center justify-center group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-green-400/30 transition-all duration-300 overflow-hidden border-2 border-border group-hover:border-green-400">
                       <Image
                         src={bot.image}
                         alt={`${bot.name} avatar`}
@@ -427,14 +465,17 @@ export default function Home() {
                     <h3 className="text-xl font-bold text-green-600 dark:text-green-400 group-hover:text-green-500 dark:group-hover:text-green-300 transition-colors">
                       {bot.name}
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors">
+                    <p className="text-muted-foreground text-sm leading-relaxed group-hover:text-foreground transition-colors">
                       {bot.description}
                     </p>
                   </div>
 
                   {/* Chat now button */}
                   <div className="mt-6">
-                    <button className="w-full bg-green-500 text-white font-semibold py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-green-600">
+                    <button
+                      onClick={() => handleChatNowClick(bot.type)}
+                      className="w-full bg-green-500 text-white font-semibold py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-green-600"
+                    >
                       Chat Now
                     </button>
                   </div>
@@ -536,14 +577,14 @@ export default function Home() {
                         <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 group-hover:text-green-500 dark:group-hover:text-green-300 transition-colors">
                           {t.name}
                         </h3>
-                        <p className="text-gray-500 dark:text-gray-400 text-sm font-medium group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                        <p className="text-muted-foreground text-sm font-medium group-hover:text-foreground transition-colors">
                           {t.role}
                         </p>
                       </div>
 
                       {/* Testimonial text */}
                       <div className="relative">
-                        <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed italic group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors duration-200">
+                        <p className="text-muted-foreground text-base leading-relaxed italic group-hover:text-foreground transition-colors duration-200">
                           "{t.text}"
                         </p>
                       </div>
@@ -585,7 +626,7 @@ export default function Home() {
           <div className="relative bg-gray-800 border border-gray-700 p-8 rounded-lg max-w-md w-full mx-4">
             <button
               onClick={() => setShowAuth(false)}
-              className="absolute top-2 right-2 text-gray-400 hover:text-white text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-700 transition-colors"
+              className="absolute top-2 right-2 text-muted-foreground hover:text-foreground text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
             >
               ✕
             </button>

@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <body className="min-h-screen bg-background text-foreground antialiased font-sans transition-colors duration-300">
+      <body className="page-container antialiased font-sans transition-colors duration-300">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

@@ -1,17 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import CreateBotForm from "@/components/CreateBotForm";
 import Link from "next/link";
 
 export default function CreateBotPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [preSelectedBotType, setPreSelectedBotType] = useState(null);
 
   useEffect(() => {
+    // Get bot type from URL parameters
+    const botType = searchParams.get("type");
+    if (botType) {
+      setPreSelectedBotType(botType);
+    }
+
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
         router.push("/");
@@ -22,11 +30,11 @@ export default function CreateBotPage() {
     });
 
     return () => unsubscribe();
-  }, [router]);
+  }, [router, searchParams]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background text-foreground p-8">
+      <div className="p-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-green-600 dark:border-t-green-400"></div>
@@ -37,14 +45,14 @@ export default function CreateBotPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-8">
+    <div className="p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-green-600 dark:text-green-400">
               Create New Bot
             </h1>
-            <p className="text-gray-400 mt-2">
+            <p className="text-muted-foreground mt-2">
               Design your perfect AI companion
             </p>
           </div>
@@ -53,7 +61,9 @@ export default function CreateBotPage() {
           </Link>
         </div>
 
-        {user && <CreateBotForm user={user} />}
+        {user && (
+          <CreateBotForm user={user} preSelectedBotType={preSelectedBotType} />
+        )}
       </div>
     </div>
   );

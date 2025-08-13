@@ -38,7 +38,7 @@ export default function ContactPage() {
   }, [showToast]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors">
+    <div className="transition-colors">
       {/* Back to Homepage Button */}
       <div className="container mx-auto px-4 pt-8">
         <Link
@@ -66,7 +66,7 @@ export default function ContactPage() {
           <h1 className="text-5xl font-bold text-green-600 dark:text-green-400">
             Contact Us
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+          <p className="text-lg text-foreground leading-relaxed">
             Have a question, suggestion, or just want to say hello? Send us a
             message below.
           </p>
@@ -74,11 +74,11 @@ export default function ContactPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-6 bg-gray-100 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-lg p-8"
+          className="space-y-6 bg-secondary border border-border rounded-lg p-8"
         >
           <div className="grid sm:grid-cols-2 gap-6">
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="text-sm font-medium text-foreground">
                 Name
               </label>
               <input
@@ -91,7 +91,7 @@ export default function ContactPage() {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label className="text-sm font-medium text-foreground">
                 Email
               </label>
               <input
@@ -105,7 +105,7 @@ export default function ContactPage() {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label className="text-sm font-medium text-foreground">
               Message
             </label>
             <textarea
@@ -135,7 +135,7 @@ export default function ContactPage() {
           <h2 className="text-2xl font-semibold text-green-600 dark:text-green-300">
             Other Ways
           </h2>
-          <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+          <ul className="space-y-2 text-sm text-muted-foreground">
             <li>
               Email:{" "}
               <a
