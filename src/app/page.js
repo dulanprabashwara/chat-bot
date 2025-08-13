@@ -524,7 +524,7 @@ export default function Home() {
               ].map((t, index) => (
                 <div
                   key={t.name}
-                  className="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:shadow-2xl hover:shadow-green-500/10 dark:hover:shadow-green-400/10 hover:border-green-500 dark:hover:border-green-400 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer transform"
+                  className="group relative bg-secondary border border-border rounded-xl p-6 hover:shadow-2xl hover:shadow-green-500/10 dark:hover:shadow-green-400/10 hover:border-green-500 dark:hover:border-green-400 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer transform"
                   style={{
                     animationDelay: `${index * 150}ms`,
                   }}

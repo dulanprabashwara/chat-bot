@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+
 export default function PrivacyPage() {
   return (
     <div className="transition-colors">
@@ -17,6 +19,7 @@ export default function PrivacyPage() {
           <li>Delete your profile to remove associated bots & messages.</li>
         </ul>
       </div>
+      <Footer />
     </div>
   );
 }

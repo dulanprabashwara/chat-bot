@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { saveContactMessage } from "@/lib/firestore";
+import Footer from "@/components/Footer";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -122,13 +123,15 @@ export default function ContactPage() {
               {status.text}
             </div>
           )}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full sm:w-auto bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold px-8 py-3 rounded-md hover:bg-green-500 dark:hover:bg-green-300 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
-          >
-            {loading ? "Sending..." : "Send Message"}
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full sm:w-auto bg-green-600 dark:bg-green-400 text-white dark:text-black font-semibold px-8 py-3 rounded-md hover:bg-green-500 dark:hover:bg-green-300 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+            >
+              {loading ? "Sending..." : "Send Message"}
+            </button>
+          </div>
         </form>
 
         <section className="space-y-4">
@@ -171,6 +174,7 @@ export default function ContactPage() {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }

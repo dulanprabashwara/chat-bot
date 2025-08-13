@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 
+import Footer from "@/components/Footer";
+
 export default function AboutPage() {
   return (
     <div className="transition-colors">
@@ -103,6 +105,7 @@ export default function AboutPage() {
           </div>
         </section>
       </div>
+      <Footer />
     </div>
   );
 }

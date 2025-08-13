@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+
 export default function TermsPage() {
   return (
     <div className="transition-colors">
@@ -16,6 +18,7 @@ export default function TermsPage() {
           <li>Deleting your account removes stored bots & messages.</li>
         </ul>
       </div>
+      <Footer />
     </div>
   );
 }

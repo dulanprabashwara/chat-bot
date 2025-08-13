@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import CreateBotForm from "@/components/CreateBotForm";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 export default function CreateBotPage() {
   const router = useRouter();
@@ -65,6 +66,7 @@ export default function CreateBotPage() {
           <CreateBotForm user={user} preSelectedBotType={preSelectedBotType} />
         )}
       </div>
+      <Footer />
     </div>
   );
 }

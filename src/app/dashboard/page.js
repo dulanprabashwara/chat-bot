@@ -6,6 +6,7 @@ import { onAuthStateChanged, deleteUser, updateProfile } from "firebase/auth";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import {
   getUserProfile,
   getUserBots,
@@ -454,6 +455,7 @@ export default function DashboardPage() {
 
         {error && <div className="text-red-400 text-sm">{error}</div>}
       </main>
+      <Footer />
     </div>
   );
 }
