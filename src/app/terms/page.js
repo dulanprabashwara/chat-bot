@@ -2,8 +2,8 @@ import Footer from "@/components/Footer";
 
 export default function TermsPage() {
   return (
-    <div className="transition-colors">
-      <div className="container mx-auto px-4 py-16 max-w-4xl space-y-8">
+    <div className="min-h-screen flex flex-col transition-colors">
+      <div className="container mx-auto px-4 py-16 max-w-4xl space-y-8 flex-grow">
         <h1 className="text-5xl font-bold text-green-600 dark:text-green-400 mb-4">
           Terms of Service
         </h1>
