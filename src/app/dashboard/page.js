@@ -5,7 +5,7 @@ import { auth } from "@/lib/firebase";
 import { onAuthStateChanged, deleteUser, updateProfile } from "firebase/auth";
 import Link from "next/link";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/ResizableNavbar";
 import Footer from "@/components/Footer";
 import {
   getUserProfile,
@@ -170,15 +170,17 @@ export default function DashboardPage() {
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center space-y-4">
+      <div className="pt-28">
         <Navbar />
-        <p>You need to login to view your dashboard.</p>
-        <Link
-          href="/"
-          className="text-green-400 underline hover:text-green-300"
-        >
-          Go to Home
-        </Link>
+        <div className="flex flex-col items-center justify-center space-y-4 min-h-[50vh]">
+          <p>You need to login to view your dashboard.</p>
+          <Link
+            href="/"
+            className="text-green-400 underline hover:text-green-300"
+          >
+            Go to Home
+          </Link>
+        </div>
       </div>
     );
   }
@@ -186,7 +188,7 @@ export default function DashboardPage() {
   return (
     <div className="transition-colors">
       <Navbar user={user} />
-      <main className="container mx-auto px-4 py-8 space-y-10">
+      <main className="container mx-auto px-4 py-8 pt-28 space-y-10">
         <section className="bg-secondary border border-border rounded-xl p-8 shadow-2xl transition-colors">
           <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-6 flex items-center gap-3">
             <div className="w-8 h-8 bg-green-600 dark:bg-green-400 rounded-full flex items-center justify-center">

@@ -25,26 +25,26 @@ export function ThemeToggle() {
 
   const isDark = theme === "dark";
 
+  const handleThemeChange = (checked) => {
+    console.log("Theme changing from", theme, "to", checked ? "dark" : "light");
+    setTheme(checked ? "dark" : "light");
+  };
+
   return (
     <div className="flex items-center gap-2">
       <Sun
-        className={`h-5 w-5 transition-all duration-300 transform ${
-          !isDark
-            ? "text-yellow-500 scale-110 rotate-0"
-            : "text-gray-400 scale-90 rotate-90"
+        className={`h-5 w-5 transition-all duration-300 ${
+          !isDark ? "text-yellow-500" : "text-gray-400"
         }`}
       />
       <Switch
         checked={isDark}
-        onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+        onCheckedChange={handleThemeChange}
         aria-label="Toggle theme"
-        className="focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
       />
       <Moon
-        className={`h-5 w-5 transition-all duration-300 transform ${
-          isDark
-            ? "text-blue-400 scale-110 rotate-0"
-            : "text-gray-400 scale-90 -rotate-90"
+        className={`h-5 w-5 transition-all duration-300 ${
+          isDark ? "text-blue-400" : "text-gray-400"
         }`}
       />
     </div>

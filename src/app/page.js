@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 import { getUserBots, setUserProfile, getUserProfile } from "@/lib/firestore";
 import BotCard from "@/components/BotCard";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/ResizableNavbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
@@ -144,7 +144,7 @@ export default function Home() {
         onLogout={handleSignOut}
       />
 
-      <main className="pt-16">
+      <main className="pt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
           {/* Hero Section */}
           <section className="text-center space-y-8">
