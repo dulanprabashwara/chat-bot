@@ -462,15 +462,15 @@ export default function ChatUI({ bot, user }) {
   return (
     <div className="flex flex-col h-screen bg-gray-50 dark:bg-black">
       {/* WhatsApp-style Header */}
-      <div className="bg-green-600 dark:bg-green-700 text-white p-4 shadow-lg">
+      <div className="bg-green-600 dark:bg-green-700 text-white p-3 sm:p-4 shadow-lg">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
             <Link
               href="/"
-              className="text-white hover:text-green-100 transition-colors"
+              className="text-white hover:text-green-100 transition-colors flex-shrink-0"
             >
               <svg
-                className="w-6 h-6"
+                className="w-5 h-5 sm:w-6 sm:h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -483,23 +483,29 @@ export default function ChatUI({ bot, user }) {
                 />
               </svg>
             </Link>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
               {bot.imageUrl ? (
                 <img
                   src={bot.imageUrl}
                   alt={bot.name}
-                  className="w-10 h-10 rounded-full object-cover border-2 border-white/20"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-white/20 flex-shrink-0"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-lg font-semibold">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 flex items-center justify-center text-sm sm:text-lg font-semibold flex-shrink-0">
                   {bot.name.charAt(0)}
                 </div>
               )}
-              <div>
-                <div className="flex items-center space-x-2">
-                  <h1 className="text-lg font-semibold">{bot.name}</h1>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center space-x-1 sm:space-x-2">
+                  <h1 className="text-base sm:text-lg font-semibold truncate">
+                    {bot.name}
+                  </h1>
                   {/* Verified Badge with Scalloped Border */}
-                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                  <svg
+                    className="w-4 h-4 sm:w-6 sm:h-6 flex-shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
                     {/* Scalloped/Star-like border */}
                     <path
                       d="M12 2L13.09 6.26L18 5L16.74 9.26L21 12L16.74 14.74L18 19L13.09 17.74L12 22L10.91 17.74L6 19L7.26 14.74L3 12L7.26 9.26L6 5L10.91 6.26L12 2Z"
@@ -517,7 +523,7 @@ export default function ChatUI({ bot, user }) {
                     />
                   </svg>
                 </div>
-                <p className="text-sm text-green-100">
+                <p className="text-xs sm:text-sm text-green-100 truncate">
                   {isLoading ? "typing..." : "online"}
                 </p>
               </div>
@@ -525,19 +531,23 @@ export default function ChatUI({ bot, user }) {
           </div>
 
           {/* Three Dots Menu */}
-          <div className="relative" ref={menuRef}>
+          <div className="relative flex-shrink-0" ref={menuRef}>
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors"
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-5 h-5 sm:w-6 sm:h-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
               </svg>
             </button>
 
             {/* Dropdown Menu */}
             {showMenu && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+              <div className="absolute right-0 top-full mt-2 w-44 sm:w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
                 <button
                   onClick={() => {
                     setIsSearching(!isSearching);
@@ -545,10 +555,10 @@ export default function ChatUI({ bot, user }) {
                     setSearchQuery("");
                     setFilteredMessages([]);
                   }}
-                  className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-3"
+                  className="w-full px-3 sm:px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2 sm:space-x-3"
                 >
                   <svg
-                    className="w-5 h-5"
+                    className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -560,14 +570,14 @@ export default function ChatUI({ bot, user }) {
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                     />
                   </svg>
-                  <span>Search Messages</span>
+                  <span className="text-sm sm:text-base">Search Messages</span>
                 </button>
                 <button
                   onClick={handleClearChatClick}
-                  className="w-full px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-3"
+                  className="w-full px-3 sm:px-4 py-2 text-left text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2 sm:space-x-3"
                 >
                   <svg
-                    className="w-5 h-5"
+                    className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -579,7 +589,7 @@ export default function ChatUI({ bot, user }) {
                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                     />
                   </svg>
-                  <span>Clear Chat</span>
+                  <span className="text-sm sm:text-base">Clear Chat</span>
                 </button>
               </div>
             )}
@@ -588,17 +598,17 @@ export default function ChatUI({ bot, user }) {
 
         {/* Search Bar */}
         {isSearching && (
-          <div className="mt-4 flex items-center space-x-2">
+          <div className="mt-3 sm:mt-4 flex items-center space-x-2">
             <div className="flex-1 relative">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
                 placeholder="Search messages..."
-                className="w-full px-4 py-2 pl-10 bg-white/10 border border-white/20 rounded-full text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30"
+                className="w-full px-3 sm:px-4 py-2 pl-8 sm:pl-10 bg-white/10 border border-white/20 rounded-full text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 text-sm sm:text-base"
               />
               <svg
-                className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70"
+                className="w-4 h-4 sm:w-5 sm:h-5 absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-white/70"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -617,7 +627,7 @@ export default function ChatUI({ bot, user }) {
                 setSearchQuery("");
                 setFilteredMessages([]);
               }}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              className="p-1.5 sm:p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
             >
               <svg
                 className="w-5 h-5"
@@ -685,13 +695,13 @@ export default function ChatUI({ bot, user }) {
                   key={message.id}
                   className={`flex ${
                     message.role === "user" ? "justify-end" : "justify-start"
-                  } mb-4`}
+                  } mb-3 sm:mb-4 px-2 sm:px-4`}
                 >
                   <div
-                    className={`relative max-w-xs lg:max-w-md px-4 py-3 rounded-lg shadow-sm ${
+                    className={`relative max-w-[85%] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-lg shadow-sm ${
                       message.role === "user"
-                        ? "bg-green-500 text-white ml-12"
-                        : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 mr-12"
+                        ? "bg-green-500 text-white ml-4 sm:ml-12"
+                        : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 mr-4 sm:mr-12"
                     }`}
                     style={{
                       borderRadius:
@@ -700,7 +710,7 @@ export default function ChatUI({ bot, user }) {
                           : "18px 18px 18px 4px",
                     }}
                   >
-                    <p className="text-sm leading-relaxed">
+                    <p className="text-sm leading-relaxed break-words">
                       {message.content
                         .split(new RegExp(`(${searchQuery})`, "gi"))
                         .map((part, index) =>
@@ -765,13 +775,13 @@ export default function ChatUI({ bot, user }) {
                   key={message.id}
                   className={`flex ${
                     message.role === "user" ? "justify-end" : "justify-start"
-                  } mb-4`}
+                  } mb-3 sm:mb-4 px-2 sm:px-4`}
                 >
                   <div
-                    className={`relative max-w-xs lg:max-w-md px-4 py-3 rounded-lg shadow-sm ${
+                    className={`relative max-w-[85%] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-lg shadow-sm ${
                       message.role === "user"
-                        ? "bg-green-500 text-white ml-12"
-                        : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 mr-12"
+                        ? "bg-green-500 text-white ml-4 sm:ml-12"
+                        : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 mr-4 sm:mr-12"
                     }`}
                     style={{
                       borderRadius:
@@ -780,9 +790,11 @@ export default function ChatUI({ bot, user }) {
                           : "18px 18px 18px 4px",
                     }}
                   >
-                    <p className="text-sm leading-relaxed">{message.content}</p>
+                    <p className="text-sm leading-relaxed break-words">
+                      {message.content}
+                    </p>
                     <div
-                      className={`text-xs mt-2 ${
+                      className={`text-xs mt-1 sm:mt-2 ${
                         message.role === "user"
                           ? "text-green-100"
                           : "text-gray-500 dark:text-gray-400"
@@ -837,17 +849,20 @@ export default function ChatUI({ bot, user }) {
       </div>
 
       {/* WhatsApp-style Input Area */}
-      <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
+      <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-3 sm:p-4">
         <div className="max-w-4xl mx-auto">
-          <form onSubmit={sendMessage} className="flex items-end space-x-3">
+          <form
+            onSubmit={sendMessage}
+            className="flex items-end space-x-2 sm:space-x-3"
+          >
             {/* Attachment button (disabled for now) */}
             <button
               type="button"
-              className="flex-shrink-0 p-3 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              className="flex-shrink-0 p-2 sm:p-3 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               disabled
             >
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -872,14 +887,14 @@ export default function ChatUI({ bot, user }) {
                     ? "Setting up chat system..."
                     : `Type a message...`
                 }
-                className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full px-6 py-3 pr-12 text-gray-900 dark:text-white focus:border-green-500 dark:focus:border-green-400 focus:outline-none transition-colors text-sm shadow-sm"
+                className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full px-4 sm:px-6 py-2.5 sm:py-3 pr-10 sm:pr-12 text-gray-900 dark:text-white focus:border-green-500 dark:focus:border-green-400 focus:outline-none transition-colors text-sm sm:text-base shadow-sm"
                 disabled={isLoading || isIndexBuilding}
               />
               {/* Emoji button */}
               <button
                 type="button"
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors text-lg"
+                className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors text-base sm:text-lg"
               >
                 😊
               </button>
@@ -888,15 +903,15 @@ export default function ChatUI({ bot, user }) {
               {showEmojiPicker && (
                 <div
                   ref={emojiPickerRef}
-                  className="absolute bottom-full right-0 mb-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg p-3 w-80 max-h-60 overflow-y-auto z-50"
+                  className="absolute bottom-full right-0 mb-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg p-2 sm:p-3 w-72 sm:w-80 max-h-48 sm:max-h-60 overflow-y-auto z-50"
                 >
-                  <div className="grid grid-cols-10 gap-1">
+                  <div className="grid grid-cols-8 sm:grid-cols-10 gap-1">
                     {commonEmojis.map((emoji, index) => (
                       <button
                         key={index}
                         type="button"
                         onClick={() => addEmoji(emoji)}
-                        className="p-2 text-lg hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                        className="p-1.5 sm:p-2 text-base sm:text-lg hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
                       >
                         {emoji}
                       </button>
@@ -910,14 +925,14 @@ export default function ChatUI({ bot, user }) {
             <button
               type="submit"
               disabled={isLoading || !newMessage.trim()}
-              className={`flex-shrink-0 p-3 rounded-full transition-all duration-200 shadow-lg ${
+              className={`flex-shrink-0 p-2 sm:p-3 rounded-full transition-all duration-200 shadow-lg ${
                 newMessage.trim() && !isLoading
                   ? "bg-green-500 hover:bg-green-600 text-white"
                   : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 cursor-not-allowed opacity-50"
               }`}
             >
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -968,10 +983,10 @@ export default function ChatUI({ bot, user }) {
 
       {/* Success Toast */}
       {showSuccessToast && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-          <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2">
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 px-4">
+          <div className="bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg flex items-center gap-2">
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -983,7 +998,9 @@ export default function ChatUI({ bot, user }) {
                 d="M5 13l4 4L19 7"
               />
             </svg>
-            Chat cleared successfully
+            <span className="text-sm sm:text-base">
+              Chat cleared successfully
+            </span>
           </div>
         </div>
       )}
