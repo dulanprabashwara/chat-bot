@@ -128,9 +128,41 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center">
-        <div className="text-green-600 dark:text-green-400 text-2xl animate-pulse">
-          Loading...
+      <div className="flex items-center justify-center min-h-screen transition-colors">
+        <div className="text-center space-y-6">
+          {/* Enhanced loading spinner */}
+          <div className="relative">
+            <div className="animate-spin rounded-full h-32 w-32 border-4 border-gray-200 dark:border-gray-700 mx-auto"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-4 border-t-green-500 border-r-green-400 border-transparent mx-auto absolute top-0 left-1/2 transform -translate-x-1/2"></div>
+            {/* Inner pulse */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-green-500 rounded-full animate-pulse"></div>
+          </div>
+
+          {/* Loading text with animation */}
+          <div className="space-y-2">
+            <p className="text-green-600 dark:text-green-400 text-2xl font-bold animate-pulse">
+              Loading Dashboard...
+            </p>
+            <div className="flex justify-center space-x-1">
+              <div
+                className="w-2 h-2 bg-green-500 rounded-full animate-bounce"
+                style={{ animationDelay: "0ms" }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-green-500 rounded-full animate-bounce"
+                style={{ animationDelay: "150ms" }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-green-500 rounded-full animate-bounce"
+                style={{ animationDelay: "300ms" }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div className="w-64 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mx-auto overflow-hidden">
+            <div className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full animate-pulse"></div>
+          </div>
         </div>
       </div>
     );
@@ -155,7 +187,7 @@ export default function DashboardPage() {
     <div className="transition-colors">
       <Navbar user={user} />
       <main className="container mx-auto px-4 py-8 space-y-10">
-        <section className="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl p-8 shadow-2xl transition-colors">
+        <section className="bg-secondary border border-border rounded-xl p-8 shadow-2xl transition-colors">
           <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-6 flex items-center gap-3">
             <div className="w-8 h-8 bg-green-600 dark:bg-green-400 rounded-full flex items-center justify-center">
               <svg

@@ -66,6 +66,10 @@ export default function CreateBotPage() {
           <CreateBotForm user={user} preSelectedBotType={preSelectedBotType} />
         )}
       </div>
+
+      {/* Spacer between form and footer */}
+      <div className="py-8"></div>
+
       <Footer />
     </div>
   );
