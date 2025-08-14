@@ -549,6 +549,7 @@ export default function Home() {
                         alt={`${t.name} profile picture`}
                         width={80}
                         height={80}
+                        style={{ width: "80px", height: "80px" }}
                         className="rounded-full object-cover ring-4 ring-green-500/20 group-hover:ring-6 group-hover:ring-green-500/40 dark:group-hover:ring-green-400/40 transition-all duration-300 group-hover:scale-110"
                       />
                       {/* Online indicator */}
