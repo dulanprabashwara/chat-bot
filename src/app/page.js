@@ -96,7 +96,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center transition-colors">
+      <div className="flex items-center justify-center min-h-screen transition-colors">
         <div className="text-center space-y-6">
           {/* Enhanced loading spinner */}
           <div className="relative">
