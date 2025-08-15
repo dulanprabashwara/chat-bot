@@ -18,7 +18,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import MagneticButton from "@/components/MagneticButton";
 import { CheckCircle2, Lock, Globe2, Save } from "lucide-react";
-import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 
 export default function Home() {
   const router = useRouter();
@@ -146,7 +145,7 @@ export default function Home() {
       />
 
       <main className="pt-28">
-        <BackgroundBeamsWithCollision className="min-h-screen bg-transparent">
+        <div className="min-h-screen bg-transparent">
           <div className="w-full">
             {/* Hero Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -627,7 +626,7 @@ export default function Home() {
               <Footer />
             </div>
           </div>
-        </BackgroundBeamsWithCollision>
+        </div>
       </main>
 
       {/* Auth Modal */}
