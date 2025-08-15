@@ -8,55 +8,158 @@ export const BackgroundBeamsWithCollision = ({ children, className }) => {
   const parentRef = useRef(null);
 
   const beams = [
+    // Left side beams
     {
-      initialX: 10,
-      translateX: 10,
+      initialX: "5%",
+      translateX: 0,
       duration: 7,
       repeatDelay: 3,
-      delay: 2,
+      delay: 0,
     },
     {
-      initialX: 600,
-      translateX: 600,
-      duration: 3,
-      repeatDelay: 3,
-      delay: 4,
+      initialX: "10%",
+      translateX: 0,
+      duration: 5,
+      repeatDelay: 2,
+      delay: 1,
+      className: "h-8",
     },
     {
-      initialX: 100,
-      translateX: 100,
-      duration: 7,
-      repeatDelay: 7,
+      initialX: "15%",
+      translateX: 0,
+      duration: 6,
+      repeatDelay: 4,
+      delay: 3,
       className: "h-6",
     },
     {
-      initialX: 400,
-      translateX: 400,
-      duration: 5,
-      repeatDelay: 14,
+      initialX: "20%",
+      translateX: 0,
+      duration: 8,
+      repeatDelay: 1,
+      delay: 2,
+      className: "h-12",
+    },
+    // Center-left beams
+    {
+      initialX: "25%",
+      translateX: 0,
+      duration: 4,
+      repeatDelay: 3,
+      delay: 0.5,
+      className: "h-10",
+    },
+    {
+      initialX: "30%",
+      translateX: 0,
+      duration: 7,
+      repeatDelay: 2,
       delay: 4,
     },
     {
-      initialX: 800,
-      translateX: 800,
-      duration: 11,
-      repeatDelay: 2,
-      className: "h-20",
+      initialX: "35%",
+      translateX: 0,
+      duration: 5,
+      repeatDelay: 5,
+      delay: 1.5,
+      className: "h-6",
     },
     {
-      initialX: 1000,
-      translateX: 1000,
+      initialX: "40%",
+      translateX: 0,
+      duration: 6,
+      repeatDelay: 3,
+      delay: 3.5,
+      className: "h-8",
+    },
+    // Center beams
+    {
+      initialX: "45%",
+      translateX: 0,
+      duration: 8,
+      repeatDelay: 2,
+      delay: 2.5,
+      className: "h-16",
+    },
+    {
+      initialX: "50%",
+      translateX: 0,
+      duration: 5,
+      repeatDelay: 4,
+      delay: 1,
+    },
+    {
+      initialX: "55%",
+      translateX: 0,
+      duration: 7,
+      repeatDelay: 1,
+      delay: 4.5,
+      className: "h-12",
+    },
+    // Center-right beams
+    {
+      initialX: "60%",
+      translateX: 0,
+      duration: 6,
+      repeatDelay: 3,
+      delay: 0.8,
+      className: "h-8",
+    },
+    {
+      initialX: "65%",
+      translateX: 0,
       duration: 4,
       repeatDelay: 2,
+      delay: 3.2,
+      className: "h-6",
+    },
+    {
+      initialX: "70%",
+      translateX: 0,
+      duration: 8,
+      repeatDelay: 4,
+      delay: 1.8,
+      className: "h-10",
+    },
+    {
+      initialX: "75%",
+      translateX: 0,
+      duration: 5,
+      repeatDelay: 1,
+      delay: 4.2,
+    },
+    // Right side beams
+    {
+      initialX: "80%",
+      translateX: 0,
+      duration: 7,
+      repeatDelay: 3,
+      delay: 2.2,
       className: "h-12",
     },
     {
-      initialX: 1200,
-      translateX: 1200,
+      initialX: "85%",
+      translateX: 0,
       duration: 6,
+      repeatDelay: 2,
+      delay: 0.3,
+      className: "h-8",
+    },
+    {
+      initialX: "90%",
+      translateX: 0,
+      duration: 4,
       repeatDelay: 4,
-      delay: 2,
+      delay: 3.8,
       className: "h-6",
+    },
+    {
+      initialX: "95%",
+      translateX: 0,
+      duration: 8,
+      repeatDelay: 1,
+      delay: 1.3,
+      className: "h-14",
     },
   ];
 
@@ -170,9 +273,12 @@ const CollisionMechanism = React.forwardRef(
             repeatDelay: beamOptions.repeatDelay || 0,
           }}
           className={cn(
-            "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-green-400 via-green-300 to-transparent shadow-lg shadow-green-400/50",
+            "absolute top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-green-400 via-green-300 to-transparent shadow-lg shadow-green-400/50",
             beamOptions.className
           )}
+          style={{
+            left: beamOptions.initialX,
+          }}
         />
         <AnimatePresence>
           {collision.detected && collision.coordinates && (
