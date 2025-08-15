@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import ConditionalRainBackground from "@/components/ConditionalRainBackground";
 
 export const metadata = {
   title: "BotNexus - AI Character Chat Platform",
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="page-container antialiased font-sans transition-colors duration-300">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ConditionalRainBackground>{children}</ConditionalRainBackground>
+        </ThemeProvider>
       </body>
     </html>
   );
