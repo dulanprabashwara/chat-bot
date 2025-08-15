@@ -23,18 +23,18 @@ export const Navbar = ({ children, className }) => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0;
       setVisible(currentScrollY > 100);
     };
-    
+
     handleInitialScroll();
-    
+
     // Also check after a small delay to ensure everything is loaded
     const timeoutId = setTimeout(handleInitialScroll, 100);
-    
+
     return () => clearTimeout(timeoutId);
   }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (!isClient) return;
-    
+
     if (latest > 100) {
       setVisible(true);
     } else {

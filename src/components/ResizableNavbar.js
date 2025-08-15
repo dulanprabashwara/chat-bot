@@ -66,7 +66,7 @@ export default function Navbar({ user, onLogout, onLogin, profile }) {
 
   // Auth buttons component
   const AuthButtons = ({ visible }) => (
-    <div 
+    <div
       className="flex items-center"
       style={{
         gap: "24px",
