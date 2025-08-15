@@ -94,11 +94,14 @@ export const StarsBackground = ({
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       // Determine star color based on theme
-      const isDark = !mounted || resolvedTheme === 'dark' || (!resolvedTheme && theme === 'dark');
-      const starColor = isDark ? '255, 255, 255' : '34, 197, 94'; // white for dark mode, green for light mode
-      
+      const isDark =
+        !mounted ||
+        resolvedTheme === "dark" ||
+        (!resolvedTheme && theme === "dark");
+      const starColor = isDark ? "255, 255, 255" : "34, 197, 94"; // white for dark mode, green for light mode
+
       stars.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
