@@ -373,21 +373,27 @@ export default function ChatUI({ bot, user }) {
 
   const [error, setError] = useState(null);
 
-  // Bot type to character prompt mapping
-  const getCharacterPrompt = (botType) => {
+  // Use custom bot prompt or fallback to predefined character prompt
+  const getCharacterPrompt = (bot) => {
+    // If the bot has a custom prompt, use it
+    if (bot.prompt && bot.prompt.trim()) {
+      return `You are ${bot.name}, an AI assistant on the BotNexus platform. ${bot.prompt}. Always introduce yourself as ${bot.name} and follow the behavior described. Be consistent with this personality throughout the conversation.`;
+    }
+
+    // Fallback to predefined prompts if no custom prompt
     const prompts = {
       assistant:
-        "You are a helpful AI assistant. You provide clear, accurate, and useful information to help users with their questions and tasks. You're professional yet friendly, and always aim to be concise and helpful.",
+        "You are a highly knowledgeable and efficient AI assistant named BotNexus Assistant. You provide clear, accurate, and actionable information. You're professional yet approachable, and you always aim to solve problems efficiently. You ask clarifying questions when needed and provide step-by-step solutions. Stay focused and helpful in every response.",
       friend:
-        "You are a friendly AI companion. You're warm, empathetic, and enjoy casual conversations. You're a good listener and always try to be supportive and encouraging. You have a relaxed, conversational tone.",
+        "You are a warm and caring AI friend named BotNexus Friend. You're empathetic, supportive, and genuinely interested in the user's wellbeing. You use casual, friendly language and often share encouraging words. You remember context from conversations and show genuine concern. You're like a supportive best friend who's always there to listen and offer comfort.",
       teacher:
-        "You are an AI teacher. You're patient, knowledgeable, and skilled at explaining complex concepts in simple terms. You encourage learning, ask thoughtful questions, and provide educational guidance. You're supportive and motivating.",
+        "You are an inspiring AI teacher named BotNexus Educator. You're patient, encouraging, and skilled at breaking down complex concepts into digestible pieces. You use examples, analogies, and interactive questions to help students learn. You celebrate progress, provide constructive feedback, and adapt your teaching style to the user's learning pace. You make learning engaging and fun.",
       expert:
-        "You are an AI expert. You have deep knowledge across various technical and specialized domains. You provide detailed, accurate information and can discuss complex topics with precision. You're analytical and thorough in your responses.",
+        "You are a highly specialized AI expert named BotNexus Expert. You have deep, technical knowledge across multiple domains and provide detailed, research-backed information. You cite sources when possible, explain complex concepts thoroughly, and offer multiple perspectives on topics. You're analytical, precise, and always strive for accuracy in your expertise.",
       artist:
-        "You are an AI artist. You're creative, imaginative, and passionate about art, design, and creative expression. You help with creative projects, offer artistic insights, and inspire creativity. You have an artistic, expressive personality.",
+        "You are a creative and imaginative AI artist named BotNexus Creative. You're passionate about all forms of artistic expression, from visual arts to creative writing. You inspire creativity, offer artistic techniques, and help users explore their creative side. You speak with enthusiasm about art, use vivid descriptions, and encourage experimental thinking. You see beauty and creative potential everywhere.",
     };
-    return prompts[botType] || prompts.assistant;
+    return prompts[bot.type] || prompts.assistant;
   };
 
   const sendMessage = async (e) => {
@@ -409,7 +415,14 @@ export default function ChatUI({ bot, user }) {
         }
       );
 
-      // Send to API
+      // Send to API with conversation history
+      const conversationHistory = messages
+        .slice(-10) // Only send last 10 messages to avoid token limits
+        .map((msg) => ({
+          role: msg.role,
+          content: msg.content,
+        }));
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
@@ -417,7 +430,8 @@ export default function ChatUI({ bot, user }) {
         },
         body: JSON.stringify({
           message: messageText,
-          characterPrompt: getCharacterPrompt(bot.type),
+          characterPrompt: getCharacterPrompt(bot),
+          conversationHistory: conversationHistory,
         }),
       });
 
@@ -656,9 +670,29 @@ export default function ChatUI({ bot, user }) {
       >
         {isIndexBuilding ? (
           <div className="text-center text-gray-600 dark:text-gray-400 mt-8">
-            <p>Setting up the chat system... This may take a minute.</p>
-            <div className="mt-4">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-green-500"></div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700 max-w-sm mx-auto">
+              <p className="text-lg font-medium mb-4">
+                Setting up the chat system...
+              </p>
+              <p className="text-sm mb-4">This may take a minute.</p>
+              <div className="relative">
+                <div className="inline-block animate-spin rounded-full h-10 w-10 border-4 border-gray-200 dark:border-gray-700"></div>
+                <div className="absolute inset-0 inline-block animate-spin rounded-full h-10 w-10 border-4 border-transparent border-t-green-600 dark:border-t-green-400"></div>
+              </div>
+              <div className="flex justify-center space-x-1 mt-4">
+                <div
+                  className="w-2 h-2 bg-green-600 dark:bg-green-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "0ms" }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-green-600 dark:bg-green-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "150ms" }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-green-600 dark:bg-green-400 rounded-full animate-bounce"
+                  style={{ animationDelay: "300ms" }}
+                ></div>
+              </div>
             </div>
           </div>
         ) : messages.length === 0 ? (

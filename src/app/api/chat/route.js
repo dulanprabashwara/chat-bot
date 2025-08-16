@@ -53,7 +53,7 @@ export async function POST(request) {
     });
 
     const safetySystemPrompt =
-      "You are a helpful AI assistant. Keep responses concise, avoid repetition, and end at a natural sentence boundary.";
+      "You are an AI assistant that MUST strictly follow the character description provided. Stay in character at all times and embody the personality, tone, and behavior described. Be consistent with your character throughout the conversation and maintain the same energy and approach in every response. Keep responses engaging but concise.";
 
     const sanitizeText = (text) => {
       if (!text) return text;
@@ -100,11 +100,11 @@ export async function POST(request) {
         body: JSON.stringify({
           model,
           messages,
-          max_tokens: 300,
-          temperature: 0.4,
+          max_tokens: 400,
+          temperature: 0.7,
           top_p: 0.9,
-          frequency_penalty: 0.6,
-          presence_penalty: 0.2,
+          frequency_penalty: 0.3,
+          presence_penalty: 0.4,
         }),
       });
       return res;

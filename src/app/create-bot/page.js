@@ -35,12 +35,36 @@ function CreateBotContent() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center space-y-4">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-green-600 dark:border-t-green-400"></div>
-          <p className="text-green-600 dark:text-green-400 text-lg font-medium">
-            Loading...
-          </p>
+      <div className="flex items-center justify-center min-h-screen transition-colors">
+        <div className="text-center space-y-6">
+          {/* Enhanced loading spinner */}
+          <div className="relative">
+            <div className="animate-spin rounded-full h-32 w-32 border-4 border-gray-200 dark:border-gray-700 mx-auto"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-4 border-t-green-500 border-r-green-400 border-transparent mx-auto absolute top-0 left-1/2 transform -translate-x-1/2"></div>
+            {/* Inner pulse */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-green-500 rounded-full animate-pulse"></div>
+          </div>
+
+          {/* Loading text with animation */}
+          <div className="space-y-2">
+            <p className="text-green-600 dark:text-green-400 text-2xl font-bold animate-pulse">
+              Loading...
+            </p>
+            <div className="flex justify-center space-x-1">
+              <div
+                className="w-2 h-2 bg-green-500 rounded-full animate-bounce"
+                style={{ animationDelay: "0ms" }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-green-500 rounded-full animate-bounce"
+                style={{ animationDelay: "150ms" }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-green-500 rounded-full animate-bounce"
+                style={{ animationDelay: "300ms" }}
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
     );

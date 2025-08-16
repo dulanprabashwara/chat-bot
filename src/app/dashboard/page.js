@@ -28,6 +28,15 @@ export default function DashboardPage() {
   const [newDisplayName, setNewDisplayName] = useState("");
   const [savingName, setSavingName] = useState(false);
 
+  // Toast states
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [botToDelete, setBotToDelete] = useState(null);
+  const [showAccountDeleteConfirm, setShowAccountDeleteConfirm] =
+    useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success"); // "success" or "error"
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
       setUser(u);
@@ -64,45 +73,79 @@ export default function DashboardPage() {
     setBots(list);
   };
 
+  // Show toast message
+  const showToastMessage = (message, type = "success") => {
+    setToastMessage(message);
+    setToastType(type);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 5000);
+  };
+
+  // Show delete confirmation
   const handleDeleteBot = async (id, name) => {
     if (!user) return;
-    if (!confirm(`Delete bot "${name}"? This cannot be undone.`)) return;
+    setBotToDelete({ id, name });
+    setShowDeleteConfirm(true);
+  };
+
+  // Confirm deletion
+  const confirmDeleteBot = async () => {
+    if (!botToDelete) return;
+    const { id, name } = botToDelete;
+
     setBusyIds((s) => ({ ...s, [id]: true }));
+    setShowDeleteConfirm(false);
+    setBotToDelete(null);
+
     try {
       await deleteBot(user.uid, id);
       await refreshBots();
+      showToastMessage(`Bot "${name}" deleted successfully!`, "success");
     } catch (e) {
       console.error(e);
-      alert("Failed to delete bot");
+      showToastMessage("Failed to delete bot. Please try again.", "error");
     } finally {
       setBusyIds((s) => ({ ...s, [id]: false }));
     }
   };
 
+  // Cancel deletion
+  const cancelDeleteBot = () => {
+    setShowDeleteConfirm(false);
+    setBotToDelete(null);
+  };
+
   const handleDeleteAccount = async () => {
     if (!user) return;
-    if (
-      !confirm(
-        "This will delete your profile and all chatbots/messages. Continue?"
-      )
-    )
-      return;
+    setShowAccountDeleteConfirm(true);
+  };
+
+  // Confirm account deletion
+  const confirmDeleteAccount = async () => {
+    if (!user) return;
+    setShowAccountDeleteConfirm(false);
     setGlobalBusy(true);
+
     try {
       await deleteUserProfile(user.uid);
       // Also remove auth user (must be recent login for some providers)
       await deleteUser(user);
-      alert("Account deleted");
+      showToastMessage("Account deleted successfully!", "success");
     } catch (e) {
       console.error(e);
-      alert(
+      const errorMessage =
         e?.code === "auth/requires-recent-login"
           ? "Please re-login then try again."
-          : "Failed to delete account"
-      );
+          : "Failed to delete account";
+      showToastMessage(errorMessage, "error");
     } finally {
       setGlobalBusy(false);
     }
+  };
+
+  // Cancel account deletion
+  const cancelDeleteAccount = () => {
+    setShowAccountDeleteConfirm(false);
   };
 
   const handleSaveDisplayName = async () => {
@@ -489,6 +532,145 @@ export default function DashboardPage() {
 
         {error && <div className="text-red-400 text-sm">{error}</div>}
       </main>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && botToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md mx-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex-shrink-0">
+                <svg
+                  className="w-12 h-12 text-red-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Delete Bot
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                  Are you sure you want to delete "{botToDelete.name}"? This
+                  action cannot be undone.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={cancelDeleteBot}
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDeleteBot}
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 transition-colors"
+              >
+                Delete Bot
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Account Delete Confirmation Modal */}
+      {showAccountDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md mx-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex-shrink-0">
+                <svg
+                  className="w-12 h-12 text-red-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Delete Account
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                  This will permanently delete your profile and all
+                  chatbots/messages. This action cannot be undone.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={cancelDeleteAccount}
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDeleteAccount}
+                disabled={globalBusy}
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {globalBusy ? "Deleting..." : "Delete Account"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Message */}
+      {showToast && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <div className="animate-slide-in pointer-events-auto">
+            <div
+              className={`px-8 py-6 rounded-xl shadow-2xl text-base font-medium flex items-center gap-4 border-2 transition-all duration-300 backdrop-blur-md ${
+                toastType === "success"
+                  ? "text-green-800 dark:text-green-200 border-green-400 dark:border-green-500 bg-green-50/95 dark:bg-green-900/90"
+                  : "text-red-800 dark:text-red-200 border-red-400 dark:border-red-500 bg-red-50/95 dark:bg-red-900/90"
+              }`}
+            >
+              <div
+                className={`w-3 h-3 rounded-full animate-pulse ${
+                  toastType === "success" ? "bg-green-500" : "bg-red-500"
+                }`}
+              ></div>
+              <span className="font-semibold text-lg">{toastMessage}</span>
+              <button
+                onClick={() => setShowToast(false)}
+                aria-label="Dismiss notification"
+                className="ml-2 text-current/70 hover:text-current transition-colors hover:bg-current/10 rounded-full p-2"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );
