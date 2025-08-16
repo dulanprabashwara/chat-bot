@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="pt-16 border-t border-border text-muted-foreground transition-colors">
       <div className="container mx-auto px-4 max-w-6xl">
-        <div className="grid gap-10 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
+        <div className="grid gap-10 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 text-center sm:text-left">
           <div className="space-y-4">
             <h3 className="text-green-600 dark:text-green-400 text-xl font-semibold">
               BotNexus
@@ -66,7 +66,7 @@ export default function Footer() {
             <h4 className="text-green-600 dark:text-green-300 font-medium">
               Follow
             </h4>
-            <div className="flex gap-4">
+            <div className="flex gap-4 justify-center sm:justify-start">
               <a
                 href="https://linkedin.com"
                 target="_blank"

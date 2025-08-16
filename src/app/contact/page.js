@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { saveContactMessage } from "@/lib/firestore";
 import Footer from "@/components/Footer";
 
 export default function ContactPage() {
@@ -17,7 +16,21 @@ export default function ContactPage() {
     setStatus(null);
     try {
       setLoading(true);
-      await saveContactMessage({ name, email, message });
+
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
       setStatus({ type: "success", text: "Message sent! We'll be in touch." });
       setShowToast(true);
       setName("");
@@ -142,10 +155,10 @@ export default function ContactPage() {
             <li>
               Email:{" "}
               <a
-                href="mailto:hello@example.com"
+                href="mailto:dulanprabashwara@gmail.com"
                 className="text-green-600 dark:text-green-400 hover:underline"
               >
-                hello@example.com
+                dulanprabashwara@gmail.com
               </a>
             </li>
             <li>Instagram: @yourhandle</li>
