@@ -68,7 +68,7 @@ export default function Footer() {
             </h4>
             <div className="flex gap-4 justify-center sm:justify-start">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/dulan-prabashwara-6a8719305?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -77,7 +77,7 @@ export default function Footer() {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/dulanprabashwara"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
@@ -86,7 +86,7 @@ export default function Footer() {
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/dulan__11/profilecard/?igsh=b3lwYzlxMDlucDBu"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
