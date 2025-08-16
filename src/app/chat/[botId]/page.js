@@ -69,6 +69,11 @@ export default function ChatPage({ params }) {
               ></div>
             </div>
           </div>
+
+          {/* Progress bar */}
+          <div className="w-64 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mx-auto overflow-hidden">
+            <div className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full animate-pulse"></div>
+          </div>
         </div>
       </div>
     );
