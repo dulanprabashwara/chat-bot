@@ -632,7 +632,7 @@ export default function Home() {
       {/* Auth Modal */}
       {showAuth && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="relative bg-gray-800 border border-gray-700 p-8 rounded-lg max-w-md w-full mx-4">
+          <div className="relative bg-gray-100 dark:bg-black border border-gray-700 p-8 rounded-lg max-w-md w-full mx-4">
             <button
               onClick={() => setShowAuth(false)}
               className="absolute top-2 right-2 text-muted-foreground hover:text-foreground text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
