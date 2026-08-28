@@ -15,12 +15,12 @@ A full-stack AI character chat platform built with Next.js, Firebase, and OpenRo
 
 ## AI Characters
 
-1. **Cyber** 🖥️ - Hacker & Security Expert
-2. **Dr. Nova** ⚛️ - Quantum Physicist
-3. **Sage** 🤖 - AI Philosopher
-4. **Luna** ✍️ - Creative Writer
-5. **Titan** 💪 - Fitness Coach
-6. **Venture** 🚀 - Tech Entrepreneur
+1. **AI Assistant**  - A helpful AI assistent for general tasks and questions
+2. **AI friend**  - A friendly AI companion for casual conversations
+3. **AI teacher**  - An educational AI that helps with learning
+4. **AI exprt** ✍️ - A specialized AI for technical and detailed discussions
+5. **AI artist** 💪 - An AI focused creative and artistic conversations
+
 
 ## Tech Stack
 
