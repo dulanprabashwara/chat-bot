@@ -2,6 +2,8 @@
 
 A full-stack AI character chat platform built with Next.js, Firebase, and OpenRouter. Users can chat with unique AI personalities, each with their own expertise and personality.
 
+      https://chat-bot-oh94.vercel.app/
+
 ## Features
 
 - 🔐 **Firebase Authentication** - Email/password login and signup
